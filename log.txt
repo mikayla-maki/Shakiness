@@ -1,0 +1,33 @@
+2014-02-13 13:22:18 Query was: SELECT  title, director, shakiness  FROM movies WHERE  1 LIMIT 0, 100
+2014-02-13 13:22:20 Query was: SELECT  title, director FROM movies WHERE  1 LIMIT 0, 100
+2014-02-13 13:22:28 Query was: SELECT  title, director FROM movies WHERE MATCH(director) AGAINST(' +Christoper +Nolan' IN BOOLEAN MODE)  LIMIT 0, 100
+2014-02-13 13:37:55 Query was: SELECT  title, director, shakiness  FROM movies WHERE  1 LIMIT 0, 100
+2014-02-13 13:41:25 Query was: SELECT  title, director, shakiness  FROM movies WHERE  1 LIMIT 0, 100
+2014-02-13 13:42:10 Query was: SELECT  title, director, shakiness  FROM movies WHERE  1 LIMIT 0, 100
+2014-02-13 13:56:19 Query was: SELECT  title, director, shakiness  FROM movies WHERE  1 LIMIT 0, 100
+2014-02-13 13:56:20 Query was: SELECT  title, director, shakiness  FROM movies WHERE  1 LIMIT 0, 100
+2014-02-13 13:56:35 Query was: SELECT  title, director, shakiness  FROM movies WHERE  shakiness  <  4 LIMIT 0, 100
+2014-02-13 13:56:39 Query was: SELECT  title, director, shakiness FROM movies WHERE  1 LIMIT 0, 100
+2014-02-13 13:56:46 Query was: SELECT  title, director, shakiness  FROM movies WHERE  shakiness  <  4 LIMIT 0, 100
+2014-02-13 13:58:01 Query was: SELECT  title, director, shakiness  FROM movies WHERE  1 LIMIT 0, 100
+2014-02-13 13:58:08 Query was: SELECT  title, director, shakiness  FROM movies WHERE  shakiness  <  5 LIMIT 0, 100
+2014-02-13 13:58:27 Query was: SELECT  title, director, shakiness  FROM movies WHERE MATCH(director) AGAINST(' +Harold' IN BOOLEAN MODE)  LIMIT 0, 100
+2014-02-13 13:58:34 Query was: SELECT  title, director, shakiness  FROM movies WHERE MATCH(title) AGAINST(' +Groundhog' IN BOOLEAN MODE)  LIMIT 0, 100
+2014-02-13 13:58:43 Query was: SELECT  title, director, shakiness  FROM movies WHERE  1 LIMIT 0, 100
+2014-02-13 13:59:16 Query was: SELECT  title, director, shakiness  FROM movies WHERE MATCH(title,director) AGAINST(' +James +Cameron -Judgment -Day' IN BOOLEAN MODE)  LIMIT 0, 100
+2014-02-13 13:59:22 Query was: SELECT  title, director, shakiness FROM movies WHERE  1 LIMIT 0, 100
+2014-02-13 13:59:24 Query was: SELECT  title, director, shakiness  FROM movies WHERE  1 LIMIT 0, 100
+2014-02-13 13:59:32 Query was: SELECT  title, director, shakiness  FROM movies WHERE  shakiness  =  5 LIMIT 0, 100
+2014-02-13 13:59:35 Query was: SELECT  title, director, shakiness  FROM movies WHERE  1 LIMIT 0, 100
+2014-02-13 14:03:09 Query was: SELECT  title, director, shakiness  FROM movies WHERE  1 LIMIT 0, 100
+2014-02-13 14:03:34 Query was: SELECT  title FROM movies WHERE MATCH(title) AGAINST(' +Who' IN BOOLEAN MODE)  LIMIT 0, 100
+2014-02-13 14:03:52 Query was: SELECT  title FROM movies WHERE MATCH(director) AGAINST(' +%Moffatt%' IN BOOLEAN MODE)  LIMIT 0, 100
+2014-02-13 14:03:59 Query was: SELECT  title, director, shakiness  FROM movies WHERE MATCH(title) AGAINST(' +Who' IN BOOLEAN MODE)  LIMIT 0, 100
+2014-02-13 14:12:42 Query was: SELECT  title, director, shakiness  FROM movies WHERE  1 LIMIT 0, 100
+2014-02-13 14:22:37 Query was: SELECT  title, director, shakiness  FROM movies WHERE  1 LIMIT 0, 100
+2014-02-13 15:16:53 Query was: SELECT  title, director, shakiness  FROM movies WHERE  1 LIMIT 0, 100
+2014-02-13 15:17:23 Query was: SELECT  title, director, shakiness FROM movies WHERE MATCH(title,director) AGAINST(' +Dark* -Batman*' IN BOOLEAN MODE)  LIMIT 0, 100
+2014-02-13 15:17:34 Query was: SELECT  title, director, shakiness FROM movies WHERE MATCH(title) AGAINST(' +Batman*' IN BOOLEAN MODE)  LIMIT 0, 100
+2014-02-26 23:06:05 Failed to connect to to MySQL: Access denied for user 'stovot_trenton'@'localhost' (using password: YES)
+2014-02-26 23:06:38 Failed to connect to to MySQL: Access denied for user 'stovot_trenton'@'localhost' (using password: YES)
+2014-02-26 23:07:33 Failed to connect to to MySQL: Access denied for user 'stovot_trenton'@'localhost' (using password: YES)
