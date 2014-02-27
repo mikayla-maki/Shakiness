@@ -1,6 +1,6 @@
 <?php
 include_once("shell.php");
-
+$pageData = "";
 $sender = $_POST["sender"];
 
 $error = "";
@@ -47,39 +47,44 @@ if (isset($_POST["title"]) && isset($_POST["director"]) && isset($_POST["shakine
 }
 
 if ($sender != "curl") {
-    ?>
+    $pageData = $pageData . '
     <h2>Add a movie!</h2>
     <form method="post">
         <div class="form-group">
             <label>
                 Title:
-                <input type="text" class="form-control" name="title" value="<?php if (!isset($response)) {
-                    echo $title;
-                } ?>"/>
+                <input type="text" class="form-control" name="title" value="';
+    if (!isset($response)) {
+        $pageData = $pageData . $title;
+    }
+    $pageData = $pageData . '"/>
             </label>
         </div>
         <div class="form-group">
             <label>
                 Director:
-                <input type="text" class="form-control" name="director" value="<?php if (!isset($response)) {
-                    echo $director;
-                } ?>"/>
+                <input type="text" class="form-control" name="director" value="';
+    if (!isset($response)) {
+        $pageData = $pageData . $director;
+    }
+    $pageData = $pageData . '"/>
             </label><br/>
         </div>
         <div class="form-group">
             <label>
                 Shakiness:
-                <input type="text" class="form-control" name="shakiness" value="<?php if (!isset($response)) {
-                    echo $shakiness;
-                } ?>"/>
-            </label>
+                <input type="text" class="form-control" name="shakiness" value="';
+    if (!isset($response)) {
+        $pageData = $pageData . $shakiness;
+    }
+    $pageData = $pageData . '"/> </label>
         </div>
         <input type="submit" class="btn btn-default">
-    </form>
-    <?php echo "<span class='error'>" . $error . "</span>";
+    </form> span class="error">" . $error . "</span>"';
     if (isset($response)) {
-        echo $response;
+        $pageData = $pageData . $response;
     }
+    printToPage($pageData);
 } else {
     if (!$error) {
         printToPage("Thanks for submitting some data! Here's what you submitted:

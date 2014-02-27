@@ -3,11 +3,12 @@ include_once("shell.php");
 
 $pageData = '
     <br/>
-    <form>
-        <div class="form-inline">
+    <form class="form-inline">
+        <div class="form-group">
             <label for="search">Search for movies: </label>
             <input type="text" name="search">
         </div>
+          <button type="submit" class="btn btn-default">Search!</button>
     </form>
 ';
 
