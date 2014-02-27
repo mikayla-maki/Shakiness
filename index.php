@@ -49,7 +49,7 @@ if (isset($_POST["title"]) && isset($_POST["director"]) && isset($_POST["shakine
 if ($sender != "curl") {
     $pageData = $pageData . '
     <h2>Add a movie!</h2>
-    <form method="post">
+    <form method="post" role="form">
         <div class="form-group">
             <label>
                 Title:

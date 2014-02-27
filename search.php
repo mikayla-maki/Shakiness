@@ -3,12 +3,17 @@ include_once("shell.php");
 
 $pageData = '
     <br/>
-    <form class="form-inline" method="post">
+    <form class="form-inline" method="post" role="form">
         <div class="form-group">
+            <label class="sr-only" for="search">Search by director or title...</label>
             <input type="text" name="search" placeholder="Search by director or title...">
         </div>
+        <button type="submit" class="btn btn-default">Search!</button>
+    </form>
+    <form class="form-inline" method="post" role="form">
         <div class="form-group">
-            <input type="text" name="search" placeholder="Search by director or title...">
+            <label class="sr-only" for="searchShake">Search by shakiness...</label>
+            <input type="text" name="searchShake" placeholder="Search by maximum shakiness...">
         </div>
           <button type="submit" class="btn btn-default">Search!</button>
     </form>
@@ -18,7 +23,7 @@ if (isset($_POST['search'])) {
     $like = "";
     $searchParameters = explode(" ", getEscapedPost('search'));
 
-    if (count($searchParameters)) {
+    if (count($searchParameters) == 1) {
         $like = $like . "%" . $searchParameters[0] . "%";
     } else {
         for ($i = 0; $i < count($searchParameters); $i++) {
@@ -31,10 +36,17 @@ if (isset($_POST['search'])) {
             }
         }
     }
-
     $query = "SELECT * FROM movies WHERE director LIKE '$like' OR title LIKE '$like'";
+} elseif (isset($_POST['searchShake'])) {
+    $searchParameters = explode(" ", getEscapedPost('search'));
+    if (count($searchParameters) != 1 || !is_numeric($searchParameters[0])) {
+        logger("bad parameters to a shakiness search: " . var_export($searchParameters));
+    } else {
+        $query = "SELECT * FROM movies WHERE shakiness <= $searchParameters[0]";
+    }
+}
+if (isset($query)) {
     logger("Query was: " . $query);
-
 
     $result = mysql_query($query, $db_server);
 
