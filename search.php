@@ -3,10 +3,12 @@ include_once("shell.php");
 
 $pageData = '
     <br/>
-    <form class="form-inline">
+    <form class="form-inline" method="post">
         <div class="form-group">
-            <label for="search">Search for movies: </label>
-            <input type="text" name="search">
+            <input type="text" name="search" placeholder="Search by director or title...">
+        </div>
+        <div class="form-group">
+            <input type="text" name="search" placeholder="Search by director or title...">
         </div>
           <button type="submit" class="btn btn-default">Search!</button>
     </form>
@@ -15,10 +17,22 @@ $pageData = '
 if (isset($_POST['search'])) {
     $like = "";
     $searchParameters = explode(" ", getEscapedPost('search'));
-    foreach ($searchParameters as $parameter) {
-        $like = $like . " %" . $parameter . "% ";
+
+    if (count($searchParameters)) {
+        $like = $like . "%" . $searchParameters[0] . "%";
+    } else {
+        for ($i = 0; $i < count($searchParameters); $i++) {
+            if ($i == 0) {
+                $like = $like . "%" . $searchParameters[$i] . "% ";
+            } elseif ($i == (count($searchParameters) - 1)) {
+                $like = $like . " %" . $searchParameters[$i] . "%";
+            } else {
+                $like = $like . " %" . $searchParameters[$i] . "% ";
+            }
+        }
     }
-    $query = "SELECT * FROM MOVIES WHERE director LIKE $like OR title LIKE $like";
+
+    $query = "SELECT * FROM movies WHERE director LIKE '$like' OR title LIKE '$like'";
     logger("Query was: " . $query);
 
 
@@ -32,7 +46,7 @@ if (isset($_POST['search'])) {
         <div class="table-responsive">
             <table class="data table">
                 <tr>
-                    <th>Title<</th>
+                    <th>Title</th>
                     <th>Director</th>
                     <th>Shakiness</th>
                 </tr>';

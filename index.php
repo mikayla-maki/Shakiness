@@ -36,9 +36,9 @@ if (isset($_POST["title"]) && isset($_POST["director"]) && isset($_POST["shakine
             <td><b>Shakiness</b></td>
         </tr>
         <tr>
-            <td>$title</td>
-            <td>$director</td>
-            <td>$shakiness</td>
+            <td>' . $title . '</td>
+            <td>' . $director . '</td>
+            <td>' . $shakiness . '</td>
         </tr>
     </table>
 ';
@@ -77,10 +77,9 @@ if ($sender != "curl") {
     if (!isset($response)) {
         $pageData = $pageData . $shakiness;
     }
-    $pageData = $pageData . '"/> </label>
-        </div>
+    $pageData = $pageData . '"/> </label> </div>
         <input type="submit" class="btn btn-default">
-    </form> span class="error">" . $error . "</span>"';
+    </form> <span class="error">' . $error . '</span>';
     if (isset($response)) {
         $pageData = $pageData . $response;
     }

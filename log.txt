@@ -31,3 +31,18 @@
 2014-02-26 23:06:05 Failed to connect to to MySQL: Access denied for user 'stovot_trenton'@'localhost' (using password: YES)
 2014-02-26 23:06:38 Failed to connect to to MySQL: Access denied for user 'stovot_trenton'@'localhost' (using password: YES)
 2014-02-26 23:07:33 Failed to connect to to MySQL: Access denied for user 'stovot_trenton'@'localhost' (using password: YES)
+2014-02-26 20:04:02 Failed to insert into the databse. Error: Duplicate entry 'People' for key 'PRIMARY'
+2014-02-27 17:13:17 Query was: SELECT * FROM MOVIES WHERE director LIKE  %Post!%  OR title LIKE  %Post!% 
+2014-02-27 17:13:17 Failed to insert into the databse. Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '%Post!%  OR title LIKE  %Post!%' at line 1
+ Query: SELECT * FROM MOVIES WHERE director LIKE  %Post!%  OR title LIKE  %Post!% 
+2014-02-27 17:13:25 Query was: SELECT * FROM MOVIES WHERE director LIKE  %Christopher%  OR title LIKE  %Christopher% 
+2014-02-27 17:13:25 Failed to insert into the databse. Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '%Christopher%  OR title LIKE  %Christopher%' at line 1
+ Query: SELECT * FROM MOVIES WHERE director LIKE  %Christopher%  OR title LIKE  %Christopher% 
+2014-02-27 17:15:13 Query was: SELECT * FROM MOVIES WHERE director LIKE ' %Christopher% ' OR title LIKE ' %Christopher% '
+2014-02-27 17:15:13 Failed to insert into the databse. Error: Table 'stovot_trentondb.MOVIES' doesn't exist
+ Query: SELECT * FROM MOVIES WHERE director LIKE ' %Christopher% ' OR title LIKE ' %Christopher% '
+2014-02-27 17:17:11 Query was: SELECT * FROM movies WHERE director LIKE ' %People% ' OR title LIKE ' %People% '
+2014-02-27 17:17:21 Query was: SELECT * FROM movies WHERE director LIKE ' %Christopher% ' OR title LIKE ' %Christopher% '
+2014-02-27 17:27:00 Query was: SELECT * FROM movies WHERE director LIKE '%Christopher% ' OR title LIKE '%Christopher% '
+2014-02-27 17:28:12 Query was: SELECT * FROM movies WHERE director LIKE '%Christopher% ' OR title LIKE '%Christopher% '
+2014-02-27 17:31:20 Query was: SELECT * FROM movies WHERE director LIKE 'Christopher' OR title LIKE 'Christopher'
