@@ -12,10 +12,14 @@ $pageData = '
     </form>
     <form class="form-inline" method="post" role="form">
         <div class="form-group">
-            <label class="sr-only" for="searchShake">Search by shakiness...</label>
+            <label class="sr-only" for="searchShake">Search by maximum shakiness...</label>
             <input type="text" name="searchShake" placeholder="Search by maximum shakiness...">
         </div>
           <button type="submit" class="btn btn-default">Search!</button>
+    </form>
+    <form class="form-inline" method="post" role="form">
+          <input type="hidden" name="all" value="true">
+          <input type="submit" class="btn btn-default" value="Get all results">
     </form>
 ';
 
@@ -24,7 +28,10 @@ if (isset($_POST['search'])) {
     $searchParameters = explode(" ", getEscapedPost('search'));
 
     if (count($searchParameters) == 1) {
-        $like = $like . "%" . $searchParameters[0] . "%";
+        if (trim($searchParameters[0]) != "") {
+            $like = $like . "%" . $searchParameters[0] . "%";
+            $query = "SELECT * FROM movies WHERE director LIKE '$like' OR title LIKE '$like'";
+        }
     } else {
         for ($i = 0; $i < count($searchParameters); $i++) {
             if ($i == 0) {
@@ -35,16 +42,22 @@ if (isset($_POST['search'])) {
                 $like = $like . " %" . $searchParameters[$i] . "% ";
             }
         }
+        $query = "SELECT * FROM movies WHERE director LIKE '$like' OR title LIKE '$like'";
     }
-    $query = "SELECT * FROM movies WHERE director LIKE '$like' OR title LIKE '$like'";
+
 } elseif (isset($_POST['searchShake'])) {
-    $searchParameters = explode(" ", getEscapedPost('search'));
-    if (count($searchParameters) != 1 || !is_numeric($searchParameters[0])) {
-        logger("bad parameters to a shakiness search: " . var_export($searchParameters));
+    $searchParameters = explode(" ", getEscapedPost('searchShake'));
+    if (count($searchParameters) == 0) {
+        $query = "SELECT * FROM movies";
+    } elseif (count($searchParameters) != 1 || !is_numeric($searchParameters[0])) {
+        logger("bad parameters to a shakiness search: '" . json_encode($searchParameters) . "'");
     } else {
         $query = "SELECT * FROM movies WHERE shakiness <= $searchParameters[0]";
     }
+} elseif (isset($_POST["all"])) {
+    $query = "SELECT * FROM movies";
 }
+
 if (isset($query)) {
     logger("Query was: " . $query);
 
@@ -58,9 +71,9 @@ if (isset($query)) {
         <div class="table-responsive">
             <table class="data table">
                 <tr>
-                    <th>Title</th>
-                    <th>Director</th>
-                    <th>Shakiness</th>
+                    <td><b>Title</b></td>
+                    <td><b>Director</b></td>
+                    <td><b>Shakiness</b></td>
                 </tr>';
         $numOfRows = mysql_num_rows($result);
         for ($i = 0; $i < $numOfRows; $i++) {

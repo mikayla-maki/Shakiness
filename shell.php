@@ -80,8 +80,14 @@ function printToPage($pageData)
             .error {
                 color: red;
             }
+
+            .placeholder {
+                color: #aaa;
+            }
         </style>
         <script>
+            var cols = 40;
+            //I added fixed column support to ensure that the entire placeholder is seen.
 
             //The following code is under the MIT licensce and was taken from this post:
             //http://www.hagenburger.net/BLOG/HTML5-Input-Placeholder-Fix-With-jQuery.html
@@ -106,6 +112,19 @@ function printToPage($pageData)
                     })
                 });
             //End code from blog post
+
+            $(document).ready(function () {
+                var inputs = $('input[placeholder]');
+                for (var i = 0; i < inputs.length; i++) {
+                    if (inputs[i].size > cols) {
+                        cols = inputs[i].size
+                    }
+                    if (inputs[i].placeholder.length > cols) {
+                        cols = inputs[i].placeholder.length;
+                    }
+                }
+                for (var j = 0; j < inputs.length; j++) inputs[j].size = cols;
+            });
         </script>
     </head>
     <body>

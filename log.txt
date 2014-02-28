@@ -46,3 +46,19 @@
 2014-02-27 17:27:00 Query was: SELECT * FROM movies WHERE director LIKE '%Christopher% ' OR title LIKE '%Christopher% '
 2014-02-27 17:28:12 Query was: SELECT * FROM movies WHERE director LIKE '%Christopher% ' OR title LIKE '%Christopher% '
 2014-02-27 17:31:20 Query was: SELECT * FROM movies WHERE director LIKE 'Christopher' OR title LIKE 'Christopher'
+2014-02-27 17:32:07 Query was: SELECT * FROM movies WHERE director LIKE '%Chri%' OR title LIKE '%Chri%'
+2014-02-27 17:32:13 Query was: SELECT * FROM movies WHERE director LIKE '%D%' OR title LIKE '%D%'
+2014-02-27 18:32:17 Query was: SELECT * FROM movies WHERE director LIKE '%Feb%' OR title LIKE '%Feb%'
+2014-02-27 18:32:23 bad parameters to a shakiness search: 
+2014-02-27 18:33:20 bad parameters to a shakiness search: 
+2014-02-27 18:33:43 Query was: SELECT * FROM movies WHERE shakiness <= 9
+2014-02-27 18:33:48 Query was: SELECT * FROM movies WHERE shakiness <= 10
+2014-02-27 18:35:27 Query was: SELECT * FROM movies
+2014-02-27 18:35:28 Query was: SELECT * FROM movies
+2014-02-27 18:35:33 Query was: SELECT * FROM movies
+2014-02-27 18:35:38 Query was: SELECT * FROM movies
+2014-02-27 18:35:40 Query was: SELECT * FROM movies WHERE shakiness <= 9
+2014-02-27 18:35:45 Query was: SELECT * FROM movies WHERE director LIKE '%B%' OR title LIKE '%B%'
+2014-02-27 18:36:35 Query was: SELECT * FROM movies WHERE director LIKE '%%' OR title LIKE '%%'
+2014-02-27 18:36:38 bad parameters to a shakiness search: 
+2014-02-27 18:36:41 bad parameters to a shakiness search: 
