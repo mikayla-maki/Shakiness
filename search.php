@@ -42,7 +42,10 @@ if (isset($_POST['search'])) {
                 $like = $like . " %" . $searchParameters[$i] . "% ";
             }
         }
-        $query = "SELECT * FROM movies WHERE director LIKE '$like' OR title LIKE '$like'";
+
+        $stmt = $db_server->prepare("SELECT * FROM movies WHERE director LIKE :like OR title LIKE :like2");
+        $stmt->bindValue(':like', $like, PDO::PARAM_STR);
+        $stmt->bindValue(':like2', $name, PDO::PARAM_STR);
     }
 
 } elseif (isset($_POST['searchShake'])) {
@@ -52,10 +55,15 @@ if (isset($_POST['search'])) {
     } elseif (count($searchParameters) != 1 || !is_numeric($searchParameters[0])) {
         logger("bad parameters to a shakiness search: '" . json_encode($searchParameters) . "'");
     } else {
+
+        $stmt = $db_server->prepare("SELECT * FROM movies WHERE shakiness <= :shake");
+        $stmt->bindValue(':shale', $searchParameters[0], PDO::PARAM_INT);
+
+
         $query = "SELECT * FROM movies WHERE shakiness <= $searchParameters[0]";
     }
 } elseif (isset($_POST["all"])) {
-    $query = "SELECT * FROM movies";
+    $stmt = $db_server->prepare("SELECT * FROM movies");
 }
 
 if (isset($query)) {

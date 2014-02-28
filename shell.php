@@ -15,15 +15,9 @@ $timeStamp = date("Y-m-d H:i:s");
 $logIntoDB = function () {
     global $db_password, $db_username, $db_database, $db_hostname;
 
-    $db_server = mysql_connect($db_hostname, $db_username, $db_password);
-    if ($db_server === false) {
-        logger("Failed to connect to to MySQL: " . mysql_error());
-        exit("unable to connect to database, please try again later.");
-    }
-    if (mysql_select_db($db_database, $db_server) === false) {
-        logger("Failed to select a database: " . mysql_error());
-        exit("unable to connect to database, please try again later.");
-    }
+    $db_server = new PDO("mysql:host=$db_hostname;dbname=$db_database;charset=utf8", $db_username, $db_password, array(PDO::ATTR_EMULATE_PREPARES => false,
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+
     return $db_server;
 };
 
@@ -34,7 +28,7 @@ unset($logIntoDB);
 #Get a post var that is escaped
 function getEscapedPost($var)
 {
-    return mysql_real_escape_string(htmlspecialchars($_POST[$var]));
+    return htmlspecialchars($_POST[$var]);
 }
 
 #log some txt
