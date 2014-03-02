@@ -62,3 +62,65 @@
 2014-02-27 18:36:35 Query was: SELECT * FROM movies WHERE director LIKE '%%' OR title LIKE '%%'
 2014-02-27 18:36:38 bad parameters to a shakiness search: 
 2014-02-27 18:36:41 bad parameters to a shakiness search: 
+2014-02-27 18:37:44 bad parameters to a shakiness search: ''
+2014-02-27 18:39:23 Query was: SELECT * FROM movies
+2014-02-27 18:39:31 Query was: SELECT * FROM movies WHERE director LIKE '%%' OR title LIKE '%%'
+2014-02-27 18:39:33 bad parameters to a shakiness search: ''
+2014-02-27 18:39:35 bad parameters to a shakiness search: ''
+2014-02-27 18:40:25 bad parameters to a shakiness search: ''
+2014-02-27 18:40:38 Query was: SELECT * FROM movies
+2014-02-27 18:40:40 bad parameters to a shakiness search: ''
+2014-02-27 18:41:03 bad parameters to a shakiness search: ''
+2014-02-27 18:42:06 Query was: SELECT * FROM movies
+2014-02-27 18:42:16 bad parameters to a shakiness search: '[""]'
+2014-02-27 18:42:18 Query was: SELECT * FROM movies WHERE director LIKE '%%' OR title LIKE '%%'
+2014-02-27 18:42:20 bad parameters to a shakiness search: '[""]'
+2014-02-27 18:42:42 Query was: SELECT * FROM movies
+2014-02-27 18:45:43 Query was: SELECT * FROM movies
+2014-02-27 18:45:45 bad parameters to a shakiness search: '[""]'
+2014-02-27 18:45:46 Query was: SELECT * FROM movies WHERE director LIKE '%%' OR title LIKE '%%'
+2014-02-27 18:45:47 Query was: SELECT * FROM movies WHERE director LIKE '%%' OR title LIKE '%%'
+2014-02-27 18:46:37 Query was: SELECT * FROM movies WHERE director LIKE '%% ' OR title LIKE '%% '
+2014-02-27 18:46:38 bad parameters to a shakiness search: '[""]'
+2014-02-27 18:47:50 Query was: SELECT * FROM movies WHERE director LIKE '' OR title LIKE ''
+2014-02-27 18:49:03 Query was: SELECT * FROM movies WHERE director LIKE '' OR title LIKE ''
+2014-02-27 18:49:42 bad parameters to a shakiness search: '[""]'
+2014-02-27 18:49:43 Query was: SELECT * FROM movies
+2014-02-27 18:50:08 Query was: SELECT * FROM movies WHERE director LIKE '%B%' OR title LIKE '%B%'
+2014-02-27 18:50:11 Query was: SELECT * FROM movies WHERE shakiness <= 9
+2014-02-27 18:50:20 bad parameters to a shakiness search: '[""]'
+2014-02-27 18:50:22 Query was: SELECT * FROM movies
+2014-02-27 18:50:32 Query was: SELECT * FROM movies WHERE shakiness <= 9
+2014-02-27 18:50:41 Query was: SELECT * FROM movies WHERE shakiness <= 10000
+2014-03-01 19:46:15 Couldn't connect to DB: Access denied for user 'stovot_trenton'@'199.188.200.17' (using password: YES)
+2014-03-01 19:46:20 Couldn't connect to DB: Access denied for user 'stovot_trenton'@'199.188.200.17' (using password: YES)
+2014-03-01 19:49:42 Couldn't connect to DB: Access denied for user 'stovot_trenton'@'199.188.200.17' (using password: YES)
+2014-03-01 19:49:52 Couldn't connect to DB: Access denied for user 'stovot_trenton'@'199.188.200.17' (using password: YES)
+2014-03-01 21:18:03 Query was: SELECT * FROM movies WHERE director LIKE '?' OR title LIKE '?'
+2014-03-01 21:18:31 Query was: SELECT * FROM movies WHERE director LIKE '?' OR title LIKE '?'
+2014-03-01 21:21:12 Query was: SELECT * FROM movies WHERE director LIKE '?' OR title LIKE '?'
+2014-03-01 21:21:52 Query was: SELECT * FROM movies WHERE director LIKE '?' OR title LIKE '?'
+2014-03-01 21:22:08 bad parameters to a shakiness search: '[""]'
+2014-03-01 21:22:14 Query was: SELECT * FROM movies WHERE director LIKE '?' OR title LIKE '?'
+2014-03-01 21:22:20 Query was: SELECT * FROM movies WHERE director LIKE '?' OR title LIKE '?'
+2014-03-01 21:22:47 Query was: SELECT * FROM movies WHERE director LIKE '?' OR title LIKE '?'
+2014-03-01 21:22:50 Query was: 
+2014-03-01 21:36:23 Query was: SELECT * FROM movies WHERE director LIKE '?' OR title LIKE '?'
+2014-03-01 21:36:27 Query was: 
+2014-03-01 21:36:30 Query was: 
+2014-03-01 21:37:05 Query was: SELECT * FROM movies WHERE director LIKE '?' OR title LIKE '?'
+2014-03-01 21:38:04 Query was: SELECT * FROM movies WHERE director LIKE '?' OR title LIKE '?'
+2014-03-01 21:38:06 Query was: 
+2014-03-01 21:41:21 Query was: SELECT * FROM movies WHERE director LIKE '?' OR title LIKE '?'
+2014-03-01 21:46:17 Query was: SELECT title, director, shakiness FROM movies WHERE director LIKE '?' OR title LIKE '?'
+2014-03-01 21:46:20 Query was: 
+2014-03-01 21:46:40 Query was: SELECT title, director, shakiness FROM movies WHERE director LIKE '?' OR title LIKE '?'
+2014-03-01 21:46:42 Query was: 
+2014-03-01 21:47:20 Query was: SELECT title, director, shakiness FROM movies WHERE director LIKE '?' OR title LIKE '?'
+2014-03-01 21:48:13 Query was: SELECT title, director, shakiness FROM movies WHERE director LIKE ? OR title LIKE ?
+2014-03-01 21:49:06 Query was: SELECT title, director, shakiness FROM movies WHERE director LIKE ? OR title LIKE ?
+2014-03-01 21:51:20 Query was: SELECT title, director, shakiness FROM movies WHERE director LIKE ? OR title LIKE ?
+2014-03-01 21:55:56 Query was: SELECT title, director, shakiness FROM movies WHERE director LIKE ? OR title LIKE ?
+2014-03-01 21:56:41 Query was: "SELECT title, director, shakiness FROM movies WHERE director LIKE ? OR title LIKE ?"
+2014-03-01 21:57:35 Query was: SELECT title, director, shakiness FROM movies WHERE director LIKE ? OR title LIKE ?
+2014-03-01 21:57:35 Statement was: {"affected_rows":null,"insert_id":null,"num_rows":null,"param_count":null,"field_count":null,"errno":null,"error":null,"sqlstate":null,"id":null}

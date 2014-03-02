@@ -23,14 +23,16 @@ $pageData = '
     </form>
 ';
 
-if (isset($_POST['search'])) {
+if (isset($_POST['search']) && !$mysqli_err) {
+    $query = "SELECT title, director, shakiness FROM movies WHERE director LIKE ? OR title LIKE ?";
     $like = "";
     $searchParameters = explode(" ", getEscapedPost('search'));
 
     if (count($searchParameters) == 1) {
         if (trim($searchParameters[0]) != "") {
             $like = $like . "%" . $searchParameters[0] . "%";
-            $query = "SELECT * FROM movies WHERE director LIKE '$like' OR title LIKE '$like'";
+        } else {
+            $select_all = true;
         }
     } else {
         for ($i = 0; $i < count($searchParameters); $i++) {
@@ -42,40 +44,59 @@ if (isset($_POST['search'])) {
                 $like = $like . " %" . $searchParameters[$i] . "% ";
             }
         }
-
-        $stmt = $db_server->prepare("SELECT * FROM movies WHERE director LIKE :like OR title LIKE :like2");
-        $stmt->bindValue(':like', $like, PDO::PARAM_STR);
-        $stmt->bindValue(':like2', $name, PDO::PARAM_STR);
+//        $stmt = $db_server->prepare($query);
+//        $stmt->bind_param("s", $like);
+//        $stmt->bind_param("s", $like);
     }
 
-} elseif (isset($_POST['searchShake'])) {
+    if (!isset($select_all) && !$select_all) {
+        if ($stmt = $db_server->prepare($query)) {
+            $stmt->bind_param('ss', $like, $like);
+        } else {
+            $err = "failed to connect to the database, please try again later";
+        }
+    }
+
+} elseif (isset($_POST['searchShake']) && !$mysqli_err) {
     $searchParameters = explode(" ", getEscapedPost('searchShake'));
     if (count($searchParameters) == 0) {
-        $query = "SELECT * FROM movies";
+        $select_all = true;
     } elseif (count($searchParameters) != 1 || !is_numeric($searchParameters[0])) {
+        $err = "bad parameters to a shakiness search";
         logger("bad parameters to a shakiness search: '" . json_encode($searchParameters) . "'");
     } else {
-
-        $stmt = $db_server->prepare("SELECT * FROM movies WHERE shakiness <= :shake");
-        $stmt->bindValue(':shale', $searchParameters[0], PDO::PARAM_INT);
-
-
-        $query = "SELECT * FROM movies WHERE shakiness <= $searchParameters[0]";
+        $query = "SELECT title, director, shakiness FROM movies WHERE shakiness <= ?";
     }
-} elseif (isset($_POST["all"])) {
-    $stmt = $db_server->prepare("SELECT * FROM movies");
+
+    if (!isset($select_all) || !$select_all) {
+        if ($stmt = $db_server->prepare($query)) {
+            $stmt->bind_param("i", $searchParameters[0]);
+        } else {
+            $err = "failed to connect to the database, please try again later";
+        }
+    }
+
+} elseif ((isset($_POST["all"]) || (isset($select_all) && $select_all)) && !$mysqli_err) {
+    $query = "SELECT title, director, shakiness FROM movies";
+    if ($stmt = $db_server->prepare($query)) {
+    } else {
+        $err = "failed to connect to the database, please try again later";
+    }
 }
 
-if (isset($query)) {
-    logger("Query was: " . $query);
+if (isset($stmt) && !isset($err) && !$mysqli_err) {
 
-    $result = mysql_query($query, $db_server);
+    $title = "";
+    $director = "";
+    $shakiness = "";
 
-    if ($result === false) {
-        logger("Failed to insert into the databse. Error: " . mysql_error() . "\n Query: " . $query);
-        $pageData = $pageData . "<span class='error'>Failed to query the DB</span>";
-    } else {
-        $pageData = $pageData . '
+    $stmt->execute();
+
+    $stmt->bind_result($title, $director, $shakiness);
+
+    $stmt->fetch();
+
+    $pageData = $pageData . '
         <div class="table-responsive">
             <table class="data table">
                 <tr>
@@ -83,19 +104,22 @@ if (isset($query)) {
                     <td><b>Director</b></td>
                     <td><b>Shakiness</b></td>
                 </tr>';
-        $numOfRows = mysql_num_rows($result);
-        for ($i = 0; $i < $numOfRows; $i++) {
-            $row = mysql_fetch_row($result);
-            $pageData = $pageData . "
+    while ($stmt->fetch()) {
+        $pageData = $pageData . "
                     <tr>
-                        <td>$row[0]</td>
-                        <td>$row[1]</td>
-                        <td>$row[2]</td>
+                        <td>$title</td>
+                        <td>$director</td>
+                        <td>$shakiness</td>
                     </tr>";
-        }
-        $pageData = $pageData . '</table>
-        </div>';
     }
+    $pageData = $pageData . '</table>
+        </div>';
+    $stmt->close();
+    $db_server->close();
+
+} else if (isset($err)) {
+    $pageData = $pageData . "<span style='color:red'>Could not connect to database</span>";
+    logger($err);
 }
 
 printToPage($pageData);

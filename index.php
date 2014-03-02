@@ -1,5 +1,6 @@
 <?php
 include_once("shell.php");
+
 $pageData = "";
 $sender = $_POST["sender"];
 
@@ -17,12 +18,9 @@ if (isset($_POST["title"]) && isset($_POST["director"]) && isset($_POST["shakine
         $error = "Please enter a number for 'shakiness'";
         $shakiness = "";
     } else {
-        $result = mysql_query("INSERT INTO movies (title, director, shakiness) VALUES ('{$title}', '{$director}', $shakiness)", $db_server);
-        if ($result === false) {
-            logger("Failed to insert into the databse. Error: " . mysql_error());
-
-            $error = "Failed to submit the data";
-        } else {
+        if ($stmt = $db_server->prepare("INSERT INTO movies(title,director,shakiness) VALUES (?,?,?)")) {
+            $stmt->bind_param("ssi", $title, $director, $shakiness);
+            $stmt->execute();
             $response = '
     <br />
     Thanks for the data! here is a summary:
@@ -42,6 +40,9 @@ if (isset($_POST["title"]) && isset($_POST["director"]) && isset($_POST["shakine
         </tr>
     </table>
 ';
+        } else {
+            logger("Failed to insert: " . $db_server->errno);
+            $error = "failed to submit to the database, please try again later";
         }
     }
 }

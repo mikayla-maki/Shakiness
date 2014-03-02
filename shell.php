@@ -7,18 +7,19 @@ $db_hostname = 'localhost';
 $db_database = 'stovot_trentondb';
 $db_username = 'stovot_trenton';
 $db_password = 'Trenton[F5i]';
-
+$mysqli_err = false;
 #Current timestamp
 $timeStamp = date("Y-m-d H:i:s");
 
 #log into DB
 $logIntoDB = function () {
-    global $db_password, $db_username, $db_database, $db_hostname;
-
-    $db_server = new PDO("mysql:host=$db_hostname;dbname=$db_database;charset=utf8", $db_username, $db_password, array(PDO::ATTR_EMULATE_PREPARES => false,
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-
-    return $db_server;
+    global $db_password, $db_username, $db_database, $db_hostname, $mysqli_err;
+    $conn = new mysqli($db_hostname, $db_username, $db_password, $db_database);
+    if ($conn->connect_error) {
+        logger("Couldn't connect to DB: " . $conn->connect_error);
+        $mysqli_err = $conn->connect_error;
+    }
+    return $conn;
 };
 
 $db_server = $logIntoDB();
