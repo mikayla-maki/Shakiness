@@ -2,6 +2,25 @@
 include_once("shell.php");
 
 $pageData = '
+
+  <div class="row">
+  <div class="col-lg-6">
+    <div class="input-group">
+      <div class="input-group-btn">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="dropdown-1">Action <span class="caret"></span></button>
+
+        <ul class="dropdown-menu">
+          <li><a href="#" class="dropdown-link" ref="1">Maximum</a></li>
+          <li><a href="#" class="dropdown-link" ref="1">Another action</a></li>
+          <li><a href="#" class="dropdown-link" ref="1">Something else here</a></li>
+        </ul>
+      </div><!-- /btn-group -->
+      <input type="text" class="form-control">
+    </div><!-- /input-group -->
+  </div><!-- /.col-lg-6 -->
+
+
+
     <br/>
     <form class="form-inline" method="post" role="form">
         <div class="form-group">

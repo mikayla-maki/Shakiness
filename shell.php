@@ -9,6 +9,7 @@ $db_username = 'stovot_trenton';
 $db_password = 'Trenton[F5i]';
 $mysqli_err = false;
 #Current timestamp
+date_default_timezone_set("GMT");
 $timeStamp = date("Y-m-d H:i:s");
 
 #log into DB
@@ -55,6 +56,7 @@ function printToPage($pageData)
         <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap-theme.min.css" media="screen"/>
         <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css" media="screen"/>
         <link rel="stylesheet" type="text/css" href="/bootstrap/js/plugins/flot/jquery.flot.js" media="screen"/>
+        <script src="/bootstrap/js/bootstrap.min.js"></script>
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -108,6 +110,12 @@ function printToPage($pageData)
                 });
             //End code from blog post
 
+            $(document).on('click', '.dropdown-link', function () {
+                var selText = $(this).text();
+                var id = $(this).attr('ref');
+                $('#dropdown-' + id).html(selText + ' <span class="caret"</span>');
+            });
+
             $(document).ready(function () {
                 var inputs = $('input[placeholder]');
                 for (var i = 0; i < inputs.length; i++) {
@@ -120,6 +128,8 @@ function printToPage($pageData)
                 }
                 for (var j = 0; j < inputs.length; j++) inputs[j].size = cols;
             });
+
+
         </script>
     </head>
     <body>

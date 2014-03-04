@@ -132,3 +132,8 @@
 2014-03-01 22:13:26 failed to connect to the database, please try again later
 2014-03-01 22:13:51 bad parameters to a shakiness search: '[""]'
 2014-03-01 22:13:51 failed to connect to the database, please try again later
+2014-03-04 00:30:42 Couldn't connect to DB: Access denied for user 'stovot_trenton'@'localhost' (using password: YES)
+2014-03-04 00:31:24 Couldn't connect to DB: Access denied for user 'stovot_trenton'@'localhost' (using password: YES)
+2014-03-04 00:31:37 Couldn't connect to DB: Access denied for user 'stovot_trenton'@'localhost' (using password: YES)
+2014-03-04 00:31:38 Couldn't connect to DB: Access denied for user 'stovot_trenton'@'localhost' (using password: YES)
+2014-03-04 00:31:45 Couldn't connect to DB: Access denied for user 'stovot_trenton'@'localhost' (using password: YES)
