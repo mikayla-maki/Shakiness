@@ -2,23 +2,35 @@
 include_once("shell.php");
 
 $pageData = '
+<script>
+$(document).ready(function () {
+    $("#gen-form").submit(function(e){
+    e.preventDefault();
+    var form = this;
+    $("#type").val = $("#dropdown-1").innerHTML.substring(0,4).trim().toLowerCase();
+    form.submit();
 
+})});
+</script>
+<form id="gen-form" class="form-inline">
   <div class="row">
   <div class="col-lg-6">
     <div class="input-group">
+      <input type="text" class="form-control" placeholder="Search by...">
       <div class="input-group-btn">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="dropdown-1">Action <span class="caret"></span></button>
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="dropdown-1">Maximum Shakiness <span class="caret"></span></button>
 
-        <ul class="dropdown-menu">
-          <li><a href="#" class="dropdown-link" ref="1">Maximum</a></li>
-          <li><a href="#" class="dropdown-link" ref="1">Another action</a></li>
-          <li><a href="#" class="dropdown-link" ref="1">Something else here</a></li>
+        <ul class="dropdown-menu pull-right">
+          <li><a href="#" class="dropdown-link" ref="1">Maximum Shakiness</a></li>
+          <li><a href="#" class="dropdown-link" ref="1">Minimum Shakiness</a></li>
+          <li><a href="#" class="dropdown-link" ref="1">Title or Director</a></li>
         </ul>
-      </div><!-- /btn-group -->
-      <input type="text" class="form-control">
-    </div><!-- /input-group -->
-  </div><!-- /.col-lg-6 -->
-
+        <input type="submit" class="btn btn-default" type="button"/>
+      </div>
+    </div>
+  </div>
+  <input type="hidden" name="type" id="type">
+</form>
 
 
     <br/>
@@ -42,6 +54,7 @@ $pageData = '
     </form>
 ';
 
+echo getEscapedPost("type");
 if (isset($_POST['search']) && !$mysqli_err) {
     $query = "SELECT title, director, shakiness FROM movies WHERE director LIKE ? OR title LIKE ?";
     $like = "";
