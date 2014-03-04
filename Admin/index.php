@@ -1,17 +1,20 @@
 <?php
-require_once("login.php");
+require_once("../shell.php");
 $chartData = array();
 
-$data = mysql_query("SELECT date_format(timestamp,'%Y-%m-%d') AS time, count(*) AS numOfMoviesAtTime FROM movies GROUP BY time", $db_server);
+if ($result = $db_server->query("SELECT date_format(timestamp,'%Y-%m-%d') AS time, count(*) AS numOfMoviesAtTime FROM movies GROUP BY time")) {
 
-$rows = mysql_num_rows($data);
-
-for ($j = 0; $j < $rows; ++$j) {
-    $time = strtotime(mysql_result($data, $j, 'time') . " UTC") * 1000;
-    $numOfMoviesAtTime = intval(mysql_result($data, $j, 'numOfMoviesAtTime'));
-    array_push($chartData, array($time, $numOfMoviesAtTime));
+    while ($row = $result->fetch_array(MYSQL_ASSOC)) {
+        $time = strtotime($row['time'] . " UTC") * 1000;
+        $numOfMoviesAtTime = intval($row['numOfMoviesAtTime']);
+        array_push($chartData, array($time, $numOfMoviesAtTime));
+    }
+    $result->close();
+    $chartData_js = json_encode($chartData);
+} else {
+    echo "unable to connect";
+    logger("Unable to connect: '" . $bd_server->connect_errno . "'");
 }
-$chartData_js = json_encode($chartData);
 ?>
 <html lang="en">
 <head>
@@ -43,7 +46,7 @@ $chartData_js = json_encode($chartData);
             var options = {
                 xaxis: {
                     mode: "time",
-                    timeformat: "%Y/%m/%d",
+                    monthNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                     tickSize: [1, "day"]
 
                 },
@@ -66,7 +69,7 @@ $chartData_js = json_encode($chartData);
             console.log(JSON.stringify(options));
             console.log(JSON.stringify(x));
 
-
+//For some reason everything is off by a seemingly random number of days.
         });
     </script>
 </head>

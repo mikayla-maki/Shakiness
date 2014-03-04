@@ -1,0 +1,8 @@
+[01-Mar-2014 19:46:15 America/New_York] PHP Fatal error:  Call to a member function close() on a non-object in /home/stovot/public_html/trentonmaki.us/search.php on line 117
+[01-Mar-2014 19:46:20 America/New_York] PHP Fatal error:  Call to a member function close() on a non-object in /home/stovot/public_html/trentonmaki.us/search.php on line 117
+[01-Mar-2014 21:18:03 America/New_York] PHP Fatal error:  Call to a member function fetch_row() on a non-object in /home/stovot/public_html/trentonmaki.us/search.php on line 103
+[01-Mar-2014 21:18:31 America/New_York] PHP Fatal error:  Call to a member function fetch_row() on a non-object in /home/stovot/public_html/trentonmaki.us/search.php on line 101
+[01-Mar-2014 21:21:12 America/New_York] PHP Fatal error:  Call to undefined method mysqli_stmt::fetch_row() in /home/stovot/public_html/trentonmaki.us/search.php on line 101
+[01-Mar-2014 21:21:52 America/New_York] PHP Fatal error:  Call to undefined method mysqli_stmt::fetch_row() in /home/stovot/public_html/trentonmaki.us/search.php on line 101
+[01-Mar-2014 21:55:56 America/New_York] PHP Catchable fatal error:  Object of class mysqli_stmt could not be converted to string in /home/stovot/public_html/trentonmaki.us/search.php on line 85
+[01-Mar-2014 21:56:41 America/New_York] PHP Catchable fatal error:  Object of class mysqli_stmt could not be converted to string in /home/stovot/public_html/trentonmaki.us/search.php on line 85

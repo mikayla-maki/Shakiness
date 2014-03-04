@@ -124,3 +124,11 @@
 2014-03-01 21:56:41 Query was: "SELECT title, director, shakiness FROM movies WHERE director LIKE ? OR title LIKE ?"
 2014-03-01 21:57:35 Query was: SELECT title, director, shakiness FROM movies WHERE director LIKE ? OR title LIKE ?
 2014-03-01 21:57:35 Statement was: {"affected_rows":null,"insert_id":null,"num_rows":null,"param_count":null,"field_count":null,"errno":null,"error":null,"sqlstate":null,"id":null}
+2014-03-01 22:02:25 Query was: SELECT title, director, shakiness FROM movies WHERE director LIKE ? OR title LIKE ?
+2014-03-01 22:02:25 Statement was: {"affected_rows":null,"insert_id":null,"num_rows":null,"param_count":null,"field_count":null,"errno":null,"error":null,"sqlstate":null,"id":null}
+2014-03-01 22:03:23 Query was: SELECT title, director, shakiness FROM movies WHERE director LIKE ? OR title LIKE ?
+2014-03-01 22:03:23 Statement was: {"affected_rows":null,"insert_id":null,"num_rows":null,"param_count":null,"field_count":null,"errno":null,"error":null,"sqlstate":null,"id":null}
+2014-03-01 22:13:26 bad parameters to a shakiness search: '[""]'
+2014-03-01 22:13:26 failed to connect to the database, please try again later
+2014-03-01 22:13:51 bad parameters to a shakiness search: '[""]'
+2014-03-01 22:13:51 failed to connect to the database, please try again later

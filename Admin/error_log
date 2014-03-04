@@ -1,1 +1,2 @@
-[19-Feb-2014 13:54:31 America/New_York] PHP Parse error:  syntax error, unexpected '[' in /home/stovot/public_html/trentonmaki.us/Admin/index.php on line 3
+[01-Mar-2014 23:01:43 America/New_York] PHP Fatal error:  Call to a member function fetch_array() on a non-object in /home/stovot/public_html/trentonmaki.us/Admin/index.php on line 7
+[01-Mar-2014 23:03:46 America/New_York] PHP Fatal error:  Call to a member function fetch_array() on a non-object in /home/stovot/public_html/trentonmaki.us/Admin/index.php on line 7
