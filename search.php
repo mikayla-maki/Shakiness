@@ -1,60 +1,125 @@
 <?php
 include_once("shell.php");
+?>
+    <html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Movies!</title>
+        <script type="text/javascript" src="/bootstrap/js/jquery.js"></script>
+        <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap-theme.min.css" media="screen"/>
+        <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css" media="screen"/>
+        <script src="/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/bootstrap/js/plugins/flot/jquery.flot.js"></script>
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <!--[if lte IE 8]>
+        <script language="javascript" type="text/javascript" src="bootstrap/js/plugins/flot/excanvas.min.js"></script>
+        <![endif]-->
+        <script language="javascript" type="text/javascript" src="/js/core.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/core.css" media="screen"/>
+        <script>
+            $(document).ready(function () {
+                $("#gen-form").submit(function (e) {
 
-$pageData = '
-<script>
-$(document).ready(function () {
-    $("#gen-form").submit(function(e){
-    e.preventDefault();
-    var form = this;
-    $("#type").val = $("#dropdown-1").innerHTML.substring(0,4).trim().toLowerCase();
-    form.submit();
+                    var typeJQSel = $("#type");
+                    e.preventDefault();
+                    var inputJQSel = $('input[name="input-text"]');
+                    typeJQSel.value = $("#dropdown-1").html().substring(0, 4).trim().toLowerCase();
+                    alert(inputJQSel.val());
+                    alert(typeJQSel.value);
+                    var post = $.post("search.php", {'inputText': inputJQSel.val(), 'type': typeJQSel.value});
+                    post.done(function (data) {
+                        $("html").replaceWith(data);
+                    });
+                    return false;
+                });
+        </script>
+    </head>
+    <body>
+    <div class="jumbotron">
+        <h1>Hello Movie goers!</h1>
 
-})});
-</script>
-<form id="gen-form" class="form-inline">
-  <div class="row">
-  <div class="col-lg-6">
-    <div class="input-group">
-      <input type="text" class="form-control" placeholder="Search by...">
-      <div class="input-group-btn">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="dropdown-1">Maximum Shakiness <span class="caret"></span></button>
-
-        <ul class="dropdown-menu pull-right">
-          <li><a href="#" class="dropdown-link" ref="1">Maximum Shakiness</a></li>
-          <li><a href="#" class="dropdown-link" ref="1">Minimum Shakiness</a></li>
-          <li><a href="#" class="dropdown-link" ref="1">Title or Director</a></li>
-        </ul>
-        <input type="submit" class="btn btn-default" type="button"/>
-      </div>
+        <p>This site is intended to help you track various pieces of data about different times in movies. Is there a
+            spot of shakiness that could make some people sick? How about a gory scene? Maybe some nudity you would
+            rather avoid? You can find exactly when you should look away and even a short description of the plot in
+            those sections with this service. Currently we are in the pre-alpha stage and what you see are some very
+            simple proof of concepts and learning exercises. Eventually something more will be added</p>
     </div>
-  </div>
-  <input type="hidden" name="type" id="type">
-</form>
 
+    <ul class="nav nav-tabs">
+        <li><a href="index.php">Insert Movie</a></li>
+        <li class="active"><a href="search.php">Search</a></li>
+        <li><a href="Admin/index.php">Admin</a></li>
+        <li><a class="btn btn-primary btn-xs pull-right" href="#">Log in</a></li>
+    </ul>
 
-    <br/>
-    <form class="form-inline" method="post" role="form">
-        <div class="form-group">
-            <label class="sr-only" for="search">Search by director or title...</label>
-            <input type="text" name="search" placeholder="Search by director or title...">
+    <div class="container-fluid text-center">
+
+        <div class="page-header">
+            <h1>Search
+                <small>find a movie in the database</small>
+            </h1>
         </div>
-        <button type="submit" class="btn btn-default">Search!</button>
-    </form>
-    <form class="form-inline" method="post" role="form">
-        <div class="form-group">
-            <label class="sr-only" for="searchShake">Search by maximum shakiness...</label>
-            <input type="text" name="searchShake" placeholder="Search by maximum shakiness...">
-        </div>
-          <button type="submit" class="btn btn-default">Search!</button>
-    </form>
-    <form class="form-inline" method="post" role="form">
-          <input type="hidden" name="all" value="true">
-          <input type="submit" class="btn btn-default" value="Get all results">
-    </form>
-';
 
-echo getEscapedPost("type");
+        <form id="gen-form" class="form-inline" method="post">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search by..." name="input-text">
+
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                    id="dropdown-1">Maximum Shakiness <span class="caret"></span></button>
+
+                            <ul class="dropdown-menu pull-right">
+                                <li><a href="#" class="dropdown-link" ref="1">Maximum Shakiness</a></li>
+                                <li><a href="#" class="dropdown-link" ref="1">Minimum Shakiness</a></li>
+                                <li><a href="#" class="dropdown-link" ref="1">Title or Director</a></li>
+                                <li><a href="#" class="dropdown-link" ref="1">Everything</a></li>
+                            </ul>
+                            <input type="submit" class="btn btn-default" type="button"/>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="type" id="type">
+        </form>
+
+
+        <br/>
+
+        <form class="form-inline" method="post" role="form">
+            <div class="form-group">
+                <label class="sr-only" for="search">Search by director or title...</label>
+                <input type="text" name="search" placeholder="Search by director or title...">
+            </div>
+            <button type="submit" class="btn btn-default">Search!</button>
+        </form>
+        <form class="form-inline" method="post" role="form">
+            <div class="form-group">
+                <label class="sr-only" for="searchShake">Search by maximum shakiness...</label>
+                <input type="text" name="searchShake" placeholder="Search by maximum shakiness...">
+            </div>
+            <button type="submit" class="btn btn-default">Search!</button>
+        </form>
+        <form class="form-inline" method="post" role="form">
+            <input type="hidden" name="all" value="true">
+            <input type="submit" class="btn btn-default" value="Get all results">
+        </form>
+    </div>
+    </body>
+    </html>
+
+<?php
+logger("php is being evaluated");
+echo json_encode($_POST);
+echo "<h1> DEFL: " . htmlspecialchars($_POST["type"]) . "</h1>";
+echo "<h1> MAXI: " . htmlspecialchars($_POST["input-text"]) . "</h1>";
+
 if (isset($_POST['search']) && !$mysqli_err) {
     $query = "SELECT title, director, shakiness FROM movies WHERE director LIKE ? OR title LIKE ?";
     $like = "";
@@ -128,31 +193,35 @@ if (isset($stmt) && !isset($err) && !$mysqli_err) {
 
     $stmt->fetch();
 
-    $pageData = $pageData . '
-        <div class="table-responsive">
-            <table class="data table">
+    ?>
+    <div class="table-responsive">
+        <table class="data table">
+            <tr>
+                <td><b>Title</b></td>
+                <td><b>Director</b></td>
+                <td><b>Shakiness</b></td>
+            </tr>
+            <?php
+            while ($stmt->fetch()) {
+                ?>
                 <tr>
-                    <td><b>Title</b></td>
-                    <td><b>Director</b></td>
-                    <td><b>Shakiness</b></td>
-                </tr>';
-    while ($stmt->fetch()) {
-        $pageData = $pageData . "
-                    <tr>
-                        <td>$title</td>
-                        <td>$director</td>
-                        <td>$shakiness</td>
-                    </tr>";
-    }
-    $pageData = $pageData . '</table>
-        </div>';
+                    <td><?php echo $title ?></td>
+                    <td><?php echo $director ?></td>
+                    <td><?php echo $shakiness ?></td>
+                </tr>
+            <?php
+            }
+            ?>
+        </table>
+    </div>
+    <?php
     $stmt->close();
     $db_server->close();
 
 } else if (isset($err)) {
-    $pageData = $pageData . "<span style='color:red'>Could not connect to database</span>";
     logger($err);
+    ?>
+    <span style='color:red'>Could not connect to database</span>
+<?php
 }
-
-printToPage($pageData);
 ?>

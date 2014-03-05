@@ -1,0 +1,19 @@
+/**
+ * Created by Huulktya on 3/4/14.
+ */
+table td {
+    text-align: center;
+    margin: auto;
+}
+
+table.data td {
+    padding: 6px;
+}
+
+.error {
+    color: red;
+}
+
+.placeholder {
+    color: #aaa;
+}

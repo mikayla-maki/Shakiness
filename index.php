@@ -1,7 +1,5 @@
 <?php
 include_once("shell.php");
-
-$pageData = "";
 $sender = $_POST["sender"];
 
 $error = "";
@@ -48,49 +46,93 @@ if (isset($_POST["title"]) && isset($_POST["director"]) && isset($_POST["shakine
 }
 
 if ($sender != "curl") {
-    $pageData = $pageData . '
-    <h2>Add a movie!</h2>
-    <form method="post" role="form">
-        <div class="form-group">
-            <label>
-                Title:
-                <input type="text" class="form-control" name="title" value="';
-    if (!isset($response)) {
-        $pageData = $pageData . $title;
-    }
-    $pageData = $pageData . '"/>
-            </label>
+    ?>
+
+    <html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Movies!</title>
+        <script type="text/javascript" src="/bootstrap/js/jquery.js"></script>
+        <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap-theme.min.css" media="screen"/>
+        <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css" media="screen"/>
+        <script src="/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/bootstrap/js/plugins/flot/jquery.flot.js"></script>
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <!--[if lte IE 8]>
+        <script language="javascript" type="text/javascript" src="bootstrap/js/plugins/flot/excanvas.min.js"></script>
+        <![endif]-->
+        <script language="javascript" type="text/javascript" src="/js/core.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/core.css" media="screen"/>
+    </head>
+    <body>
+
+    <div class="jumbotron">
+        <h1>Hello Movie goers!</h1>
+
+        <p>This site is intended to help you track various pieces of data about different times in movies. Is there a
+            spot of shakiness that could make some people sick? How about a gory scene? Maybe some nudity you would
+            rather avoid? You can find exactly when you should look away and even a short description of the plot in
+            those sections with this service. Currently we are in the pre-alpha stage and what you see are some very
+            simple proof of concepts and learning exercises. Eventually something more will be added</p>
+    </div>
+
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="index.php">Insert Movie</a></li>
+        <li><a href="search.php">Search</a></li>
+        <li><a href="Admin/index.php">Admin</a></li>
+        <li><a class="btn btn-primary btn-xs" href="#">Log in</a></li>
+    </ul>
+
+    <div class="container-fluid text-center">
+
+        <div class="page-header">
+            <h1>Insert
+                <small>Add a movie to the database</small>
+            </h1>
         </div>
-        <div class="form-group">
-            <label>
-                Director:
-                <input type="text" class="form-control" name="director" value="';
-    if (!isset($response)) {
-        $pageData = $pageData . $director;
-    }
-    $pageData = $pageData . '"/>
-            </label><br/>
-        </div>
-        <div class="form-group">
-            <label>
-                Shakiness:
-                <input type="text" class="form-control" name="shakiness" value="';
-    if (!isset($response)) {
-        $pageData = $pageData . $shakiness;
-    }
-    $pageData = $pageData . '"/> </label> </div>
-        <input type="submit" class="btn btn-default">
-    </form> <span class="error">' . $error . '</span>';
-    if (isset($response)) {
-        $pageData = $pageData . $response;
-    }
-    printToPage($pageData);
+
+        <form method="post" role="form">
+            <div class="form-group">
+                <label>
+                    Title:
+                    <input type="text" class="form-control" name="title"
+                           value="<?php echo !isset($response) ? $title : ""; ?>"/>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    Director:
+                    <input type="text" class="form-control" name="director"
+                           value="<?php echo !isset($response) ? $director : ""; ?>"/>
+                </label><br/>
+            </div>
+            <div class="form-group">
+                <label>
+                    Shakiness:
+                    <input type="text" class="form-control" name="shakiness"
+                           value="<?php echo !isset($response) ? $shakiness : ""; ?>"/>
+                </label>
+            </div>
+            <input type="submit" class="btn btn-default">
+        </form>
+        <span class="error"><?php echo $error ?> </span>
+        <?php echo isset($response) ? $response : ""; ?>
+    </div>
+    </body>
+    </html>
+<?php
 } else {
     if (!$error) {
-        printToPage("Thanks for submitting some data! Here's what you submitted:
-Title: $title Director: $director Shakiness: $shakiness");
+        echo "Thanks for submitting some data! Here's what you submitted:
+Title: $title Director: $director Shakiness: $shakiness";
     } else {
-        printToPage('There was an error submitting your data. Please make sure that "shakiness" was a number before continuing.');
+        echo 'There was an error submitting your data. Please make sure that "shakiness" was a number before continuing.';
     }
 }
 ?>
