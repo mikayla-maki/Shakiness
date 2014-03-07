@@ -134,3 +134,18 @@
 2014-03-01 22:13:51 failed to connect to the database, please try again later
 2014-03-05 00:44:26 php is being evaluated
 2014-03-05 00:44:35 php is being evaluated
+2014-03-05 00:55:14 php is being evaluated
+2014-03-05 01:00:36 php is being evaluated
+2014-03-05 01:00:42 php is being evaluated
+2014-03-05 01:01:14 php is being evaluated
+2014-03-05 01:01:21 php is being evaluated
+2014-03-05 01:01:48 php is being evaluated
+2014-03-05 01:01:54 php is being evaluated
+2014-03-05 20:59:09 bad parameters to a shakiness search: '["ACV"]'
+2014-03-05 20:59:09 bad parameters to a shakiness search
+2014-03-05 20:59:15 bad parameters to a shakiness search: '["DEV"]'
+2014-03-05 20:59:15 bad parameters to a shakiness search
+2014-03-05 20:59:16 bad parameters to a shakiness search: '[""]'
+2014-03-05 20:59:16 bad parameters to a shakiness search
+2014-03-05 20:59:18 bad parameters to a shakiness search: '[""]'
+2014-03-05 20:59:18 bad parameters to a shakiness search

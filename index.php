@@ -85,7 +85,7 @@ if ($sender != "curl") {
     <ul class="nav nav-tabs">
         <li class="active"><a href="index.php">Insert Movie</a></li>
         <li><a href="search.php">Search</a></li>
-        <li><a href="Admin/index.php">Admin</a></li>
+        <li><a href="Admin/index.html">Admin</a></li>
         <li><a class="btn btn-primary btn-xs" href="#">Log in</a></li>
     </ul>
 

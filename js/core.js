@@ -3,7 +3,7 @@
  */
 
 var cols = 40;
-//The following code is under the MIT licensce and was taken from this post:
+//The following code is under the MIT licence and was taken from this post:
 //http://www.hagenburger.net/BLOG/HTML5-Input-Placeholder-Fix-With-jQuery.html
 $('[placeholder]').focus(function () {
     var input = $(this);

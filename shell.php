@@ -10,19 +10,12 @@ date_default_timezone_set("GMT");
 $timeStamp = date("Y-m-d H:i:s");
 
 #log into DB
-$logIntoDB = function () {
-    global $db_password, $db_username, $db_database, $db_hostname, $mysqli_err;
-    $conn = new mysqli($db_hostname, $db_username, $db_password, $db_database);
-    if ($conn->connect_error) {
-        logger("Couldn't connect to DB: " . $conn->connect_error);
-        $mysqli_err = $conn->connect_error;
-    }
-    return $conn;
-};
 
-$db_server = $logIntoDB();
-
-unset($logIntoDB);
+$db_server = new mysqli($db_hostname, $db_username, $db_password, $db_database);
+if ($db_server->connect_error) {
+    logger("Couldn't connect to DB: " . $db_server->connect_error);
+    $mysqli_err = $db_server->connect_error;
+}
 
 #Get a post var that is escaped
 function getEscapedPost($var)
