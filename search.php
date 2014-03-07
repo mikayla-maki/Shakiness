@@ -69,7 +69,7 @@ $er = error_reporting(E_ALL);
             </div>
         </div>
         <div class="input-group">
-            <input type="submit" class="btn btn-default" id="submit-button">
+            <input type="submit" name="submit" class="btn btn-default" id="submit-button">
         </div>
         <input type="hidden" name="type" id="type" value="">
     </form>
@@ -77,8 +77,6 @@ $er = error_reporting(E_ALL);
     <br/>
 
     <?php
-
-    echo htmlspecialchars($_Post);
 
     if (isset($_POST['submit']) && !$mysqli_err) {
         $like = "";
@@ -105,8 +103,6 @@ $er = error_reporting(E_ALL);
             }
         }
         if ($_POST['type'] == "titl") {
-            echo "type was title";
-            echo "Vars: " . htmlspecialchars(json_encode($_POST));
             if (count($searchParameters) == 1) {
                 if (trim($searchParameters[0]) != "") {
                     $like = $like . "%" . $searchParameters[0] . "%";
