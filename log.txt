@@ -149,3 +149,4 @@
 2014-03-05 20:59:16 bad parameters to a shakiness search
 2014-03-05 20:59:18 bad parameters to a shakiness search: '[""]'
 2014-03-05 20:59:18 bad parameters to a shakiness search
+2014-03-10 05:15:57 Failed to increment numOfSearches, err: Invalid use of group function

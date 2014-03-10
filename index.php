@@ -9,9 +9,9 @@ $shakiness = "";
 
 
 if (isset($_POST["title"]) && isset($_POST["director"]) && isset($_POST["shakiness"])) {
-    $title = getEscapedPost("title");
-    $director = getEscapedPost("director");
-    $shakiness = getEscapedPost("shakiness");
+    $title = getEscapedPOST("title");
+    $director = getEscapedPOST("director");
+    $shakiness = getEscapedPOST("shakiness");
     if (!is_numeric($shakiness)) {
         $error = "Please enter a number for 'shakiness'";
         $shakiness = "";
@@ -21,7 +21,7 @@ if (isset($_POST["title"]) && isset($_POST["director"]) && isset($_POST["shakine
             $stmt->execute();
             $response = '
     <br />
-    Thanks for the data! here is a summary:
+    Thanks for the movie! Here\'s the data you submitted:
     <br />
     <br />
     <div class"table-responsive">
@@ -83,13 +83,14 @@ if ($sender != "curl") {
             simple proof of concepts and learning exercises. Eventually something more will be added</p>
     </div>
 
-    <ul class="nav nav-pills">
-    <li class="active"><a href="index.php">Insert Movie</a></li>
-        <li><a href="search.php">Search</a></li>
-        <li><a href="Admin/index.html">Admin</a></li>
-    </ul>
+    <div class="container text-center">
 
-    <div class="container-fluid text-center">
+        <ul class="nav nav-pills">
+            <li class="active"><a href="index.php">Insert Movie</a></li>
+            <li><a href="search.php">Search</a></li>
+            <li><a href="Admin/index.html">Admin</a></li>
+        </ul>
+
 
         <div class="page-header">
             <h1>Insert

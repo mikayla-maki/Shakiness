@@ -1245,7 +1245,7 @@
 
 $(document).ready(function () {
     console.log("readying flot plots");
-    $.plot($("#flot-bar-chart"), [
+    $.plot($("#num-of-movies"), [
         {
             data: data,
             bars: {
@@ -1257,5 +1257,16 @@ $(document).ready(function () {
             mode: "time",
             tickSize: [1, "day"]
         }
+    });
+
+    new Morris.Donut({
+        element: 'searches-pie',
+        data: [
+            {label: "Number of max searches", value: max},
+            {label: "Number of min searches", value: min},
+            {label: "Number of title searches", value: title},
+            {label: "Number of director searches", value: director},
+            {label: "Number of searches for all", value: all}
+        ]
     });
 });

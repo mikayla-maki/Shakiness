@@ -18,9 +18,14 @@ if ($db_server->connect_error) {
 }
 
 #Get a post var that is escaped
-function getEscapedPost($var)
+function getEscapedGET($var)
 {
-    return htmlspecialchars($_POST[$var]);
+    return htmlspecialchars($_GET[$var]);
+}
+
+function getEscapedPOST($var)
+{
+    return htmlspecialchars($_GET[$var]);
 }
 
 #log some txt

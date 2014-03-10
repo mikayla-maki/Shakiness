@@ -36,96 +36,124 @@ $er = error_reporting(E_ALL);
         simple proof of concepts and learning exercises. Eventually something more will be added.</p>
 </div>
 
-<ul class="nav nav-pills">
-<li><a href="index.php">Insert Movie</a></li>
-    <li class="active"><a href="search.php">Search</a></li>
-    <li><a href="Admin/index.html">Admin</a></li>
-</ul>
+<div class="container text-center">
 
-<div class="container-fluid text-center">
+    <ul class="nav nav-pills">
+        <li><a href="index.php">Insert Movie</a></li>
+        <li class="active"><a href="search.php">Search</a></li>
+        <li><a href="Admin/index.html">Admin</a></li>
+    </ul>
 
     <div class="page-header">
         <h1>Search
             <small>find a movie in the database</small>
         </h1>
     </div>
-    <form id="gen-form" class="form-inline" method="post">
+    <form id="gen-form" class="form-inline" method="get">
         <div class="row">
-            <div class="col-md-11">
+            <div class="col-md-12">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Search by..." name="input-text">
 
-                    <div class="input-group-btn">
+                    <div class="input-group-btn text-left">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                                id="dropdown-1">Title or Director <span class="caret"></span></button>
-
+                                id="dropdown-1">Title <span class="caret"></span></button>
                         <ul class="dropdown-menu pull-right">
+                            <li><a href="#" class="dropdown-link" ref="1">Title</a></li>
+                            <li><a href="#" class="dropdown-link" ref="1">Director</a></li>
                             <li><a href="#" class="dropdown-link" ref="1">Maximum Shakiness</a></li>
                             <li><a href="#" class="dropdown-link" ref="1">Minimum Shakiness</a></li>
-                            <li><a href="#" class="dropdown-link" ref="1">Title or Director</a></li>
                             <li><a href="#" class="dropdown-link" ref="1">Everything</a></li>
                         </ul>
-
                     </div>
-                </div>
-            </div>
-            <div class="col-md-1">
-                <div class="input-group">
-                    <input type="submit" name="submit" class="btn btn-default" id="submit-button">
                 </div>
             </div>
             <input type="hidden" name="type" id="type" value="">
         </div>
+        <br/>
+        <button type="submit" name="submit" class="btn btn-default" id="submit-button">
+            Submit Query
+        </button>
     </form>
 
     <br/>
 
     <?php
 
-    if (isset($_POST['submit']) && !$mysqli_err) {
+    $mapping = array(
+        'titl' => "numOfTitle",
+        'maxi' => "numOfMax",
+        'mini' => "numOfMin",
+        'dire' => "numOfDir",
+        "ever" => "numOfAll"
+    );
+
+    function makeLike($searchParameters)
+    {
         $like = "";
-        $searchParameters = explode(" ", getEscapedPost('input-text'));
+        if (count($searchParameters) == 1) {
+            if (trim($searchParameters[0]) != "") {
+                $like = $like . "%" . $searchParameters[0] . "%";
+                return $like;
+            }
+            return $like;
+        } else {
+            for ($i = 0; $i < count($searchParameters); $i++) {
+                if ($i == 0) {
+                    $like = $like . "%" . $searchParameters[$i] . "% ";
+                } elseif ($i == (count($searchParameters) - 1)) {
+                    $like = $like . " %" . $searchParameters[$i] . "%";
+                } else {
+                    $like = $like . " %" . $searchParameters[$i] . "% ";
+                }
+            }
+            return $like;
+        }
+    }
+
+    if (isset($_GET['submit']) && !$mysqli_err) {
+        $like = "";
+        $searchParameters = explode(" ", getEscapedGET('input-text'));
 
 
-        if (count($searchParameters) == 0 || $_POST['type'] == "ever") {
+        if (count($searchParameters) == 0 || $_GET['type'] == "ever") {
             if (!($stmt = $db_server->prepare("SELECT title, director, shakiness FROM movies"))) {
                 $err = "failed to connect to the database, please try again later";
             }
-        } elseif ($_POST['type'] == "mini" && is_numeric($searchParameters[0])) {
+        } elseif ($_GET['type'] == "mini" && is_numeric($searchParameters[0])) {
             if ($stmt = $db_server->prepare("SELECT title, director, shakiness FROM movies WHERE shakiness >= ?")) {
                 $stmt->bind_param("i", $searchParameters[0]);
             } else {
                 $err = "failed to connect to the database, please try again later";
             }
-        } elseif ($_POST['type'] == "maxi" && is_numeric($searchParameters[0])) {
+        } elseif ($_GET['type'] == "maxi" && is_numeric($searchParameters[0])) {
             if ($stmt = $db_server->prepare("SELECT title, director, shakiness FROM movies WHERE shakiness <= ?")) {
                 $stmt->bind_param("i", $searchParameters[0]);
             } else {
                 $err = "failed to connect to the database, please try again later";
             }
-        } elseif ($_POST['type'] == "titl") {
-            if (count($searchParameters) == 1) {
-                if (trim($searchParameters[0]) != "") {
-                    $like = $like . "%" . $searchParameters[0] . "%";
-                }
+        } elseif ($_GET['type'] == "titl") {
+            #TODO: Everything in the title and director search isn't working correctly. need to update it
+            #Current problem: Does not automatically fall back to everything if there are no results
+            $like = makeLike($searchParameters);
+            echo $like;
+            if ($stmt = $db_server->prepare("SELECT title, director, shakiness FROM movies WHERE title LIKE ?")) {
+                $stmt->bind_param("s", $like);
             } else {
-                for ($i = 0; $i < count($searchParameters); $i++) {
-                    if ($i == 0) {
-                        $like = $like . "%" . $searchParameters[$i] . "% ";
-                    } elseif ($i == (count($searchParameters) - 1)) {
-                        $like = $like . " %" . $searchParameters[$i] . "%";
-                    } else {
-                        $like = $like . " %" . $searchParameters[$i] . "% ";
-                    }
-                }
+                $err = "failed to connect to the database, please try again later";
             }
-            echo "\$like = " . $like;
-            if ($stmt = $db_server->prepare("SELECT title, director, shakiness FROM movies WHERE director LIKE ? OR title LIKE ?")) {
-                $stmt->bind_param("ss", $like, $like);
+        } elseif ($_GET['type'] == "dire") {
+            #TODO: Everything in the title and director search isn't working correctly. need to update it
+            #Current problem: Does not automatically fall back to everything if there are no results
+            $like = makeLike($searchParameters);
+            echo $like;
+            if ($stmt = $db_server->prepare("SELECT title, director, shakiness FROM movies WHERE director LIKE ?")) {
+                $stmt->bind_param("s", $like);
             } else {
                 $err = "failed to connect to the database, please try again later";
             }
         } else {
+            $_GET['type'] = "ever";
             if (!($stmt = $db_server->prepare("SELECT title, director, shakiness FROM movies"))) {
                 $err = "failed to connect to the database, please try again later";
             }
@@ -138,13 +166,15 @@ $er = error_reporting(E_ALL);
         $shakiness = "";
 
         if (!$stmt->execute()) {
-            echo htmlspecialchars($stmt->error);
+            logger($stmt->error);
         }
 
         $stmt->bind_result($title, $director, $shakiness);
 
         $stmt->fetch();
+
         ?>
+
         <div class="table-responsive">
             <table class="data table">
                 <tr>
@@ -167,7 +197,17 @@ $er = error_reporting(E_ALL);
         </div>
         <?php
         $stmt->close();
+
+        $col = $mapping[$_GET['type']];
+
+        $dbQuery = "UPDATE numOfSearches SET $col = $col + 1";
+
+        if (!$db_server->query($dbQuery)) {
+            logger("Failed to increment number of searches. Computed column: " . $col . ", err: " . $db_server->error);
+        }
+
         $db_server->close();
+
 
     } else if (isset($err)) {
         logger("\$err: " . $err . " mysqli errors: " . $db_server->error);

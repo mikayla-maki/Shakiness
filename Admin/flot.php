@@ -364,24 +364,7 @@
         </div>
         <!-- /.col-lg-12 -->
     </div>
-    <!-- /.row -->
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Number of movies added by day
-                </div>
-                <!-- /.panel-heading -->
-                <div class="panel-body">
-                    <div class="flot-chart">
-                        <div class="flot-chart-content" id="flot-bar-chart"></div>
-                    </div>
-                </div>
-                <!-- /.panel-body -->
-            </div>
-            <!-- /.panel -->
-        </div>
-    </div>
+
     <!-- /.row -->
     <div class="row">
         <div class="col-lg-12">
@@ -402,9 +385,81 @@
                         if ($result = $db_server->query($dbQuery)) {
                             $row = $result->fetch_assoc();
                             echo $row['numOfMovies'];
+                        } else {
+                            logger("error getting the number of movies: " . $db_server->error);
                         }
                         ?>
                     </h1>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+    </div>
+
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                Number of movies added by day
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="flot-chart">
+                        <div class="flot-chart-content" id="num-of-movies"></div>
+                    </div>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+    </div>
+
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Number of searches total:
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <h1>
+                        <?php
+
+                        require_once("../shell.php");
+
+                        $dbQuery = "SELECT numOfAll + numOfTitle + numOfDir + numOfMax + numOfMin AS numOfSearches FROM numOfSearches";
+
+                        $data = array();
+                        if ($result = $db_server->query($dbQuery)) {
+                            $row = $result->fetch_assoc();
+                            echo $row['numOfSearches'];
+                        } else {
+                            logger("error getting the number of searches: " . $db_server->error);
+                        }
+                        ?>
+
+                    </h1>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+    </div>
+
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Number of searches by type:
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div id="searches-pie">
+                    </div>
                 </div>
                 <!-- /.panel-body -->
             </div>
@@ -424,11 +479,16 @@
 
 <!-- Page-Level Plugin Scripts - Flot -->
 <!--[if lte IE 8]>
-<script src="js/plugins/flot/excanvas.min.js"></script><![endif]-->
+<script src="js/plugins/flot/excanvas.min.js"></script>
+<![endif]-->
 <script src="js/plugins/flot/jquery.flot.js"></script>
 <script src="js/plugins/flot/jquery.flot.tooltip.min.js"></script>
 <script src="js/plugins/flot/jquery.flot.resize.js"></script>
 <script src="js/plugins/flot/jquery.flot.pie.js"></script>
+
+<!-- Page-Level Plugin Scripts - Morris -->
+<script src="js/plugins/morris/morris.js"></script>
+<script src="js/plugins/morris/raphael-2.1.0.min.js"></script>
 
 <!-- SB Admin Scripts - Include with every page -->
 <script src="js/sb-admin.js"></script>
@@ -440,27 +500,54 @@
 
 require_once("../shell.php");
 
-$dbQuery = "SELECT DATE_FORMAT(timestamp, '%d-%m-%Y') as date, count(*) as numOfMovies FROM movies GROUP BY date";
 
-$data = array();
-if ($result = $db_server->query($dbQuery)) {
-    while ($row = $result->fetch_assoc()) {
-        array_push($data, array(strtotime($row['date']) * 1000, $row['numOfMovies']));
+$jsonEncodedData1 = getMovieDateData($db_server);
+$morrisData = getSearchData($db_server);
+
+function getMovieDateData($db_server)
+{
+    $dbQuery = "SELECT DATE_FORMAT(timestamp, '%d-%m-%Y') as date, count(*) as numOfMovies FROM movies GROUP BY date";
+
+    $data = array();
+    if ($result = $db_server->query($dbQuery)) {
+        while ($row = $result->fetch_assoc()) {
+            array_push($data, array(strtotime($row['date']) * 1000, $row['numOfMovies']));
+        }
     }
+
+    $jsonEncodedData = json_encode($data);
+    return $jsonEncodedData;
 }
 
-$jsonEncodedData = json_encode($data);
+function getSearchData($db_server)
+{
+    $dbQuery = "SELECT numOfAll, numOfTitle, numOfDir, numOfMax, numOfMin FROM numOfSearches";
+
+    $data = array();
+    if ($result = $db_server->query($dbQuery)) {
+        $row = $result->fetch_assoc();
+        $data['max'] = $row['numOfMax'];
+        $data['min'] = $row['numOfMin'];
+        $data['title'] = $row['numOfTitle'];
+        $data['director'] = $row['numOfDir'];
+        $data['all'] = $row['numOfAll'];
+    }
+
+    return $data;
+}
+
 
 ?>
 
-
-
-
-
-
 <script>
 
-    var data = <?php echo $jsonEncodedData; ?>;
+    var data = <?php echo $jsonEncodedData1; ?>;
+    var max = <?php echo $morrisData["max"]; ?>;
+    var min = <?php echo $morrisData["min"]; ?>;
+    var title = <?php echo $morrisData["title"]; ?>;
+    var director = <?php echo $morrisData["director"]; ?>;
+    var all = <?php echo $morrisData["all"]; ?>;
+
 
 </script>
 
