@@ -1249,11 +1249,13 @@ $(document).ready(function () {
         {
             data: data,
             bars: {
-                show: true
+                show: true,
+                barWidth: 24 * 60 * 60 * 1000
             }}
     ], {
         xaxis: {
-            mode: "time"
+            mode: "time",
+            tickSize: [1, "day"]
         }
     });
 });

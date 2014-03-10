@@ -1,2 +1,9 @@
 [01-Mar-2014 23:01:43 America/New_York] PHP Fatal error:  Call to a member function fetch_array() on a non-object in /home/stovot/public_html/trentonmaki.us/Admin/index.php on line 7
 [01-Mar-2014 23:03:46 America/New_York] PHP Fatal error:  Call to a member function fetch_array() on a non-object in /home/stovot/public_html/trentonmaki.us/Admin/index.php on line 7
+[05-Mar-2014 23:14:08 GMT] PHP Fatal error:  Call to a member function query() on a non-object in /home/stovot/public_html/trentonmaki.us/Admin/flot.php on line 420
+[05-Mar-2014 23:14:21 GMT] PHP Fatal error:  Call to a member function query() on a non-object in /home/stovot/public_html/trentonmaki.us/Admin/flot.php on line 420
+[05-Mar-2014 23:14:25 GMT] PHP Fatal error:  Call to a member function query() on a non-object in /home/stovot/public_html/trentonmaki.us/Admin/flot.php on line 420
+[07-Mar-2014 05:11:15 GMT] PHP Fatal error:  Call to a member function query() on a non-object in /home/stovot/public_html/trentonmaki.us/Admin/flot.php on line 420
+[07-Mar-2014 17:11:02 GMT] PHP Fatal error:  Call to a member function query() on a non-object in /home/stovot/public_html/trentonmaki.us/Admin/flot.php on line 420
+[07-Mar-2014 18:48:33 GMT] PHP Fatal error:  Call to a member function query() on a non-object in /home/stovot/public_html/trentonmaki.us/Admin/flot.php on line 420
+[07-Mar-2014 13:55:56 America/New_York] PHP Parse error:  syntax error, unexpected '[' in /home/stovot/public_html/trentonmaki.us/Admin/flot.php on line 423

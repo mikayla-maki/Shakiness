@@ -73,7 +73,8 @@ if ($sender != "curl") {
     <body>
 
     <div class="jumbotron">
-        <h1>Hello Movie goers!</h1>
+
+        <h1>Hello Movie goers! <a class="btn btn-primary btn-xs pull-right" href="Admin/login.html">Log in</a></h1>
 
         <p>This site is intended to help you track various pieces of data about different times in movies. Is there a
             spot of shakiness that could make some people sick? How about a gory scene? Maybe some nudity you would
@@ -82,11 +83,10 @@ if ($sender != "curl") {
             simple proof of concepts and learning exercises. Eventually something more will be added</p>
     </div>
 
-    <ul class="nav nav-tabs">
-        <li class="active"><a href="index.php">Insert Movie</a></li>
+    <ul class="nav nav-pills">
+    <li class="active"><a href="index.php">Insert Movie</a></li>
         <li><a href="search.php">Search</a></li>
         <li><a href="Admin/index.html">Admin</a></li>
-        <li><a class="btn btn-primary btn-xs" href="#">Log in</a></li>
     </ul>
 
     <div class="container-fluid text-center">
@@ -119,7 +119,7 @@ if ($sender != "curl") {
                            value="<?php echo !isset($response) ? $shakiness : ""; ?>"/>
                 </label>
             </div>
-            <input type="submit" class="btn btn-default">
+            <input type="submit" value="Submit Movie" class="btn btn-default">
         </form>
         <span class="error"><?php echo $error ?> </span>
         <?php echo isset($response) ? $response : ""; ?>

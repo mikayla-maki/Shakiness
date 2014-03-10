@@ -27,7 +27,7 @@ $er = error_reporting(E_ALL);
 </head>
 <body>
 <div class="jumbotron">
-    <h1>Hello Movie goers!</h1>
+    <h1>Hello Movie goers! <a class="btn btn-primary btn-xs pull-right" href="Admin/login.html">Log in</a></h1>
 
     <p>This site is intended to help you track various pieces of data about different times in movies. Is there a
         spot of shakiness that could make some people sick? How about a gory scene? Maybe some nudity you would
@@ -36,11 +36,10 @@ $er = error_reporting(E_ALL);
         simple proof of concepts and learning exercises. Eventually something more will be added.</p>
 </div>
 
-<ul class="nav nav-tabs">
-    <li><a href="index.php">Insert Movie</a></li>
+<ul class="nav nav-pills">
+<li><a href="index.php">Insert Movie</a></li>
     <li class="active"><a href="search.php">Search</a></li>
     <li><a href="Admin/index.html">Admin</a></li>
-    <li><a class="btn btn-primary btn-xs pull-right" href="#">Log in</a></li>
 </ul>
 
 <div class="container-fluid text-center">
@@ -50,28 +49,33 @@ $er = error_reporting(E_ALL);
             <small>find a movie in the database</small>
         </h1>
     </div>
-
     <form id="gen-form" class="form-inline" method="post">
-        <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search by..." name="input-text">
+        <div class="row">
+            <div class="col-md-11">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search by..." name="input-text">
 
-            <div class="input-group-btn">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                        id="dropdown-1">Title or Director <span class="caret"></span></button>
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                id="dropdown-1">Title or Director <span class="caret"></span></button>
 
-                <ul class="dropdown-menu pull-right">
-                    <li><a href="#" class="dropdown-link" ref="1">Maximum Shakiness</a></li>
-                    <li><a href="#" class="dropdown-link" ref="1">Minimum Shakiness</a></li>
-                    <li><a href="#" class="dropdown-link" ref="1">Title or Director</a></li>
-                    <li><a href="#" class="dropdown-link" ref="1">Everything</a></li>
-                </ul>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="#" class="dropdown-link" ref="1">Maximum Shakiness</a></li>
+                            <li><a href="#" class="dropdown-link" ref="1">Minimum Shakiness</a></li>
+                            <li><a href="#" class="dropdown-link" ref="1">Title or Director</a></li>
+                            <li><a href="#" class="dropdown-link" ref="1">Everything</a></li>
+                        </ul>
 
+                    </div>
+                </div>
             </div>
+            <div class="col-md-1">
+                <div class="input-group">
+                    <input type="submit" name="submit" class="btn btn-default" id="submit-button">
+                </div>
+            </div>
+            <input type="hidden" name="type" id="type" value="">
         </div>
-        <div class="input-group">
-            <input type="submit" name="submit" class="btn btn-default" id="submit-button">
-        </div>
-        <input type="hidden" name="type" id="type" value="">
     </form>
 
     <br/>
@@ -87,22 +91,19 @@ $er = error_reporting(E_ALL);
             if (!($stmt = $db_server->prepare("SELECT title, director, shakiness FROM movies"))) {
                 $err = "failed to connect to the database, please try again later";
             }
-        }
-        if ($_POST['type'] == "mini" && is_numeric($searchParameters[0])) {
+        } elseif ($_POST['type'] == "mini" && is_numeric($searchParameters[0])) {
             if ($stmt = $db_server->prepare("SELECT title, director, shakiness FROM movies WHERE shakiness >= ?")) {
                 $stmt->bind_param("i", $searchParameters[0]);
             } else {
                 $err = "failed to connect to the database, please try again later";
             }
-        }
-        if ($_POST['type'] == "maxi" && is_numeric($searchParameters[0])) {
+        } elseif ($_POST['type'] == "maxi" && is_numeric($searchParameters[0])) {
             if ($stmt = $db_server->prepare("SELECT title, director, shakiness FROM movies WHERE shakiness <= ?")) {
                 $stmt->bind_param("i", $searchParameters[0]);
             } else {
                 $err = "failed to connect to the database, please try again later";
             }
-        }
-        if ($_POST['type'] == "titl") {
+        } elseif ($_POST['type'] == "titl") {
             if (count($searchParameters) == 1) {
                 if (trim($searchParameters[0]) != "") {
                     $like = $like . "%" . $searchParameters[0] . "%";
@@ -110,21 +111,21 @@ $er = error_reporting(E_ALL);
             } else {
                 for ($i = 0; $i < count($searchParameters); $i++) {
                     if ($i == 0) {
-                        $like = $like . "%" . $searchParameters[$i];
+                        $like = $like . "%" . $searchParameters[$i] . "% ";
                     } elseif ($i == (count($searchParameters) - 1)) {
-                        $like = $like . "%" . $searchParameters[$i] . "%";
+                        $like = $like . " %" . $searchParameters[$i] . "%";
                     } else {
-                        $like = $like . "%" . $searchParameters[$i];
+                        $like = $like . " %" . $searchParameters[$i] . "% ";
                     }
                 }
             }
+            echo "\$like = " . $like;
             if ($stmt = $db_server->prepare("SELECT title, director, shakiness FROM movies WHERE director LIKE ? OR title LIKE ?")) {
                 $stmt->bind_param("ss", $like, $like);
             } else {
                 $err = "failed to connect to the database, please try again later";
             }
         } else {
-            echo "reverting to  default: " . htmlspecialchars(json_encode($_POST));
             if (!($stmt = $db_server->prepare("SELECT title, director, shakiness FROM movies"))) {
                 $err = "failed to connect to the database, please try again later";
             }

@@ -31,8 +31,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
-</div>
+    <a class="navbar-brand" href="../index.php">Return to site</a></div>
 <!-- /.navbar-header -->
 
 <ul class="nav navbar-top-links navbar-right">
@@ -277,10 +276,7 @@
                 <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="flot.php">Flot Charts</a>
-                    </li>
-                    <li>
-                        <a href="morris.html">Morris.js Charts</a>
+                        <a href="flot.php">Statistics</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->
@@ -373,13 +369,42 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Line Chart Example
+                    Number of movies added by day
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                     <div class="flot-chart">
                         <div class="flot-chart-content" id="flot-bar-chart"></div>
                     </div>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Number of movies total:
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <h1>
+                        <?php
+
+                        require_once("../shell.php");
+
+                        $dbQuery = "SELECT count(*) as numOfMovies FROM movies";
+
+                        $data = array();
+                        if ($result = $db_server->query($dbQuery)) {
+                            $row = $result->fetch_assoc();
+                            echo $row['numOfMovies'];
+                        }
+                        ?>
+                    </h1>
                 </div>
                 <!-- /.panel-body -->
             </div>
@@ -415,17 +440,23 @@
 
 require_once("../shell.php");
 
-$dbQuery = "SELECT DATE_FORMAT(timestamp, '%d/%m/%Y') as date, count(*) as numOfMovies FROM movies GROUP BY date";
+$dbQuery = "SELECT DATE_FORMAT(timestamp, '%d-%m-%Y') as date, count(*) as numOfMovies FROM movies GROUP BY date";
 
-if ($result = $bd_server->query($dbQuery)) {
-    while ($obj = $result->fetch_object()) {
-        $line .= $obj->date;
-        $line .= $obj->numOfMovies;
-        echo $line;
+$data = array();
+if ($result = $db_server->query($dbQuery)) {
+    while ($row = $result->fetch_assoc()) {
+        array_push($data, array(strtotime($row['date']) * 1000, $row['numOfMovies']));
     }
 }
 
+$jsonEncodedData = json_encode($data);
+
 ?>
+
+
+
+
+
 
 <script>
 
