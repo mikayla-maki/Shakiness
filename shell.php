@@ -25,7 +25,7 @@ function getEscapedGET($var)
 
 function getEscapedPOST($var)
 {
-    return htmlspecialchars($_GET[$var]);
+    return htmlspecialchars($_POST[$var]);
 }
 
 #log some txt

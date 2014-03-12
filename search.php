@@ -1,6 +1,28 @@
 <?php
 include_once("shell.php");
-$er = error_reporting(E_ALL);
+
+$mapToColumnNames = array(
+    'titl' => "numOfTitle",
+    'maxi' => "numOfMax",
+    'mini' => "numOfMin",
+    'dire' => "numOfDir",
+    "ever" => "numOfAll"
+);
+
+
+$mapToNames = array(
+    'titl' => "Title",
+    'maxi' => "Maximum Shakiness",
+    'mini' => "Minimum Shakiness",
+    'dire' => "Director",
+    "ever" => "Everything"
+);
+
+if (!isset($_GET['submit'])) {
+    $_GET['input-text'] = "";
+    $_GET['type'] = "titl";
+}
+
 ?>
 <html lang="en">
 <head>
@@ -31,8 +53,8 @@ $er = error_reporting(E_ALL);
 
     <p>This site is intended to help you track various pieces of data about different times in movies. Is there a
         spot of shakiness that could make some people sick? How about a gory scene? Maybe some nudity you would
-        rather avoid? You can find exactly when you should look away and even a short description of the plot in
-        those sections with this service. Currently we are in the pre-alpha stage and what you see are some very
+        rather avoid? You can find exactly when you should look away (and even a short description of the missed plot)
+        with this service. Currently, we are in the pre-alpha stage and what you see are some very
         simple proof of concepts and learning exercises. Eventually something more will be added.</p>
 </div>
 
@@ -41,6 +63,7 @@ $er = error_reporting(E_ALL);
     <ul class="nav nav-pills">
         <li><a href="index.php">Insert Movie</a></li>
         <li class="active"><a href="search.php">Search</a></li>
+        <li><a href="browse.php">Browse</a></li>
         <li><a href="Admin/index.html">Admin</a></li>
     </ul>
 
@@ -53,11 +76,13 @@ $er = error_reporting(E_ALL);
         <div class="row">
             <div class="col-md-12">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search by..." name="input-text">
+                    <input type="text" class="form-control" placeholder="Search by..." name="input-text"
+                           value="<?php echo getEscapedGET('input-text'); ?>" id="input-text">
 
                     <div class="input-group-btn text-left">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                                id="dropdown-1">Title <span class="caret"></span></button>
+                                id="dropdown-1"><?php echo $mapToNames[getEscapedGET('type')] == "" ? "Title" : $mapToNames[getEscapedGET('type')]; ?>
+                            <span class="caret"></span></button>
                         <ul class="dropdown-menu pull-right">
                             <li><a href="#" class="dropdown-link" ref="1">Title</a></li>
                             <li><a href="#" class="dropdown-link" ref="1">Director</a></li>
@@ -80,14 +105,6 @@ $er = error_reporting(E_ALL);
 
     <?php
 
-    $mapping = array(
-        'titl' => "numOfTitle",
-        'maxi' => "numOfMax",
-        'mini' => "numOfMin",
-        'dire' => "numOfDir",
-        "ever" => "numOfAll"
-    );
-
     function makeLike($searchParameters)
     {
         $like = "";
@@ -107,12 +124,11 @@ $er = error_reporting(E_ALL);
                     $like = $like . " %" . $searchParameters[$i] . "% ";
                 }
             }
-            return $like;
+            return trim($like);
         }
     }
 
     if (isset($_GET['submit']) && !$mysqli_err) {
-        $like = "";
         $searchParameters = explode(" ", getEscapedGET('input-text'));
 
 
@@ -133,22 +149,19 @@ $er = error_reporting(E_ALL);
                 $err = "failed to connect to the database, please try again later";
             }
         } elseif ($_GET['type'] == "titl") {
-            #TODO: Everything in the title and director search isn't working correctly. need to update it
+
             #Current problem: Does not automatically fall back to everything if there are no results
-            $like = makeLike($searchParameters);
-            echo $like;
+            $likeTitl = makeLike($searchParameters);
             if ($stmt = $db_server->prepare("SELECT title, director, shakiness FROM movies WHERE title LIKE ?")) {
-                $stmt->bind_param("s", $like);
+                $stmt->bind_param("s", $likeTitl);
             } else {
                 $err = "failed to connect to the database, please try again later";
             }
         } elseif ($_GET['type'] == "dire") {
-            #TODO: Everything in the title and director search isn't working correctly. need to update it
             #Current problem: Does not automatically fall back to everything if there are no results
-            $like = makeLike($searchParameters);
-            echo $like;
+            $likeDire = makeLike($searchParameters);
             if ($stmt = $db_server->prepare("SELECT title, director, shakiness FROM movies WHERE director LIKE ?")) {
-                $stmt->bind_param("s", $like);
+                $stmt->bind_param("s", $likeDire);
             } else {
                 $err = "failed to connect to the database, please try again later";
             }
@@ -170,8 +183,6 @@ $er = error_reporting(E_ALL);
         }
 
         $stmt->bind_result($title, $director, $shakiness);
-
-        $stmt->fetch();
 
         ?>
 

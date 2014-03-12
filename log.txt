@@ -150,3 +150,4 @@
 2014-03-05 20:59:18 bad parameters to a shakiness search: '[""]'
 2014-03-05 20:59:18 bad parameters to a shakiness search
 2014-03-10 05:15:57 Failed to increment numOfSearches, err: Invalid use of group function
+2014-03-11 20:10:46 Couldn't connect to DB: No such file or directory

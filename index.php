@@ -7,7 +7,6 @@ $title = "";
 $director = "";
 $shakiness = "";
 
-
 if (isset($_POST["title"]) && isset($_POST["director"]) && isset($_POST["shakiness"])) {
     $title = getEscapedPOST("title");
     $director = getEscapedPOST("director");
@@ -78,9 +77,10 @@ if ($sender != "curl") {
 
         <p>This site is intended to help you track various pieces of data about different times in movies. Is there a
             spot of shakiness that could make some people sick? How about a gory scene? Maybe some nudity you would
-            rather avoid? You can find exactly when you should look away and even a short description of the plot in
-            those sections with this service. Currently we are in the pre-alpha stage and what you see are some very
-            simple proof of concepts and learning exercises. Eventually something more will be added</p>
+            rather avoid? You can find exactly when you should look away (and even a short description of the missed
+            plot)
+            with this service. Currently, we are in the pre-alpha stage and what you see are some very
+            simple proof of concepts and learning exercises. Eventually something more will be added.</p>
     </div>
 
     <div class="container text-center">
@@ -88,6 +88,7 @@ if ($sender != "curl") {
         <ul class="nav nav-pills">
             <li class="active"><a href="index.php">Insert Movie</a></li>
             <li><a href="search.php">Search</a></li>
+            <li><a href="browse.php">Browse</a></li>
             <li><a href="Admin/index.html">Admin</a></li>
         </ul>
 
@@ -118,6 +119,12 @@ if ($sender != "curl") {
                     Shakiness:
                     <input type="text" class="form-control" name="shakiness"
                            value="<?php echo !isset($response) ? $shakiness : ""; ?>"/>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    Movie cover (optional):
+                    <input type="file" name="movie-img" class="form-control">
                 </label>
             </div>
             <input type="submit" value="Submit Movie" class="btn btn-default">
