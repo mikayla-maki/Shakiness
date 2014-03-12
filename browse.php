@@ -85,20 +85,33 @@ include_once("shell.php");
                 <div class="col-md-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <?php echo htmlspecialchars($title); ?>, by <?php echo htmlspecialchars($director); ?>
+                            <?php echo htmlentities($title); ?>, by <?php echo htmlentities($director); ?>
                         </div>
                         <div class="panel-body">
-                            <!-- Get this image from the filesystem or the database -->
-                            <img src="http://placehold.it/93x108" alt="Image here!"
-                                 class="img-thumbnail img-responsive">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <!-- Get this image from the filesystem or the database -->
+                                    <img src="http://placehold.it/93x108" alt="Image here!"
+                                         class="img-thumbnail img-responsive">
+                                </div>
+                                <div class="col-md-8">
+                                    <h4>Data:</h4>
 
-                            <p>
-                                Shakiness: <?php echo htmlspecialchars($shakiness); ?>
-                            </p>
+                                    <p>
+                                        Shakiness: <?php echo $shakiness ?>
+                                        <br/>OTHER STATISTICS HERE
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Description:</h4>
 
-                            <p>
-                                Description: TO BE ADDED
-                            </p>
+                                    <p>
+                                        TO BE ADDED
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

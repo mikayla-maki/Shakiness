@@ -184,28 +184,57 @@ if (!isset($_GET['submit'])) {
 
         $stmt->bind_result($title, $director, $shakiness);
 
-        ?>
+        $result = $stmt->fetch();
+        while ($result) {
+            $counter = 0;
+            ?>
+            <div class="row">
+                <?php
+                while ($result && $counter < 3) {
 
-        <div class="table-responsive">
-            <table class="data table">
-                <tr>
-                    <td><b>Title</b></td>
-                    <td><b>Director</b></td>
-                    <td><b>Shakiness</b></td>
-                </tr>
-                <?php
-                while ($stmt->fetch()) {
                     ?>
-                    <tr>
-                        <td><?php echo $title ?></td>
-                        <td><?php echo $director ?></td>
-                        <td><?php echo $shakiness ?></td>
-                    </tr>
-                <?php
+                    <div class="col-md-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <?php echo htmlentities($title); ?>, by <?php echo htmlentities($director); ?>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <!-- Get this image from the filesystem or the database -->
+                                        <img src="http://placehold.it/93x108" alt="Image here!"
+                                             class="img-thumbnail img-responsive">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h4>Data:</h4>
+
+                                        <p>
+                                            Shakiness: <?php echo $shakiness ?>
+                                            <br/>OTHER STATISTICS HERE
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h4>Description:</h4>
+
+                                        <p>
+                                            TO BE ADDED
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                    $counter = $counter + 1;
+                    $result = $stmt->fetch();
                 }
                 ?>
-            </table>
-        </div>
+            </div>
+        <?php
+        }
+        ?>
         <?php
         $stmt->close();
 

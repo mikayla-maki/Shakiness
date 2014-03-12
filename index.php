@@ -18,25 +18,7 @@ if (isset($_POST["title"]) && isset($_POST["director"]) && isset($_POST["shakine
         if ($stmt = $db_server->prepare("INSERT INTO movies(title,director,shakiness) VALUES (?,?,?)")) {
             $stmt->bind_param("ssi", $title, $director, $shakiness);
             $stmt->execute();
-            $response = '
-    <br />
-    Thanks for the movie! Here\'s the data you submitted:
-    <br />
-    <br />
-    <div class"table-responsive">
-    <table class="data table">
-        <tr>
-            <td><b>Title</b></td>
-            <td><b>Director</b></td>
-            <td><b>Shakiness</b></td>
-        </tr>
-        <tr>
-            <td>' . $title . '</td>
-            <td>' . $director . '</td>
-            <td>' . $shakiness . '</td>
-        </tr>
-    </table>
-';
+            $response = True;
         } else {
             logger("Failed to insert: " . $db_server->errno);
             $error = "failed to submit to the database, please try again later";
@@ -121,16 +103,52 @@ if ($sender != "curl") {
                            value="<?php echo !isset($response) ? $shakiness : ""; ?>"/>
                 </label>
             </div>
-            <div class="form-group">
-                <label>
-                    Movie cover (optional):
-                    <input type="file" name="movie-img" class="form-control">
-                </label>
-            </div>
             <input type="submit" value="Submit Movie" class="btn btn-default">
         </form>
         <span class="error"><?php echo $error ?> </span>
-        <?php echo isset($response) ? $response : ""; ?>
+        <?php if (isset($response)) { ?>
+            <div class="row">
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <?php echo $title ?>, by <?php echo $director ?>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <!-- Get this image from the filesystem or the database -->
+                                    <img src="http://placehold.it/93x108" alt="Image here!"
+                                         class="img-thumbnail img-responsive">
+                                </div>
+                                <div class="col-md-8">
+                                    <h4>Data:</h4>
+
+                                    <p>
+                                        Shakiness: <?php echo $shakiness ?>
+                                        <br/>OTHER STATISTICS HERE
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Description:</h4>
+
+                                    <p>
+                                        TO BE ADDED
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                </div>
+            </div>
+        <?php
+        }
+        ?>
     </div>
     </body>
     </html>
