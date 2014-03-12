@@ -62,6 +62,7 @@ include_once("shell.php");
     </div>
 
     <?php
+    #add this to the other pages
     if (!$stmt = $db_server->prepare("SELECT title, director, shakiness FROM movies")) {
         logger("Failed to query database, mysqli err: " . $stmt->error);
     }
